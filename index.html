@@ -1040,6 +1040,7 @@
             cursor: none;
             display: flex;
             flex-direction: column;
+            min-height: 280px;
         }
 
         /* Bento Grid Sizing */
@@ -1063,8 +1064,10 @@
             opacity: 0;
             transition: opacity 0.5s ease;
             pointer-events: none;
+            z-index: 1;
         }
 
+        /* Rotating glow - positioned behind content */
         .value-card::after {
             content: '';
             position: absolute;
@@ -1077,6 +1080,7 @@
             transition: opacity 0.5s ease;
             animation: borderRotate 4s linear infinite paused;
             pointer-events: none;
+            z-index: 0;
         }
 
         @keyframes borderRotate {
@@ -1084,11 +1088,12 @@
         }
 
         .value-card:hover {
-            background: var(--slate);
+            background: var(--charcoal);
             transform: translateY(-8px);
             box-shadow: 
                 0 30px 60px rgba(0, 0, 0, 0.4),
-                0 0 60px rgba(240, 192, 90, 0.1);
+                0 0 60px rgba(240, 192, 90, 0.15);
+            border-color: var(--gold);
         }
 
         .value-card:hover::before {
@@ -1096,7 +1101,7 @@
         }
 
         .value-card:hover::after {
-            opacity: 0.3;
+            opacity: 0.15;
             animation-play-state: running;
         }
 
@@ -1112,20 +1117,31 @@
             opacity: 0.1;
             line-height: 1;
             transition: all 0.4s ease;
+            z-index: 2;
         }
 
         .value-card:hover .value-number {
-            opacity: 0.25;
+            opacity: 0.3;
             transform: scale(1.1);
+        }
+
+        /* Card header - icon and title side by side */
+        .value-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1.25rem;
+            position: relative;
+            z-index: 3;
         }
 
         /* Icon container with animated ring */
         .value-icon-wrap {
-            width: 90px;
-            height: 90px;
+            width: 70px;
+            height: 70px;
             position: relative;
-            margin-bottom: 2rem;
             flex-shrink: 0;
+            z-index: 3;
         }
 
         .value-icon-ring {
@@ -1161,8 +1177,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             transition: all 0.4s var(--ease-out-expo);
         }
 
@@ -1184,57 +1200,63 @@
             filter: drop-shadow(0 0 10px rgba(240, 192, 90, 0.5));
         }
 
-        /* Content */
-        .value-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-        }
-
-        .value-card h3 {
+        /* Title in header */
+        .value-header h3 {
             font-family: var(--font-display);
             font-size: 2rem;
             font-weight: 500;
             color: var(--pearl);
-            margin-bottom: 0.75rem;
-            transition: color 0.3s ease;
+            margin: 0;
+            transition: all 0.3s ease;
         }
 
-        .value-card:hover h3 {
+        .value-card:hover .value-header h3 {
             color: var(--gold-light);
+            text-shadow: 0 0 30px rgba(240, 192, 90, 0.3);
         }
 
-        .value-card p {
-            font-size: 1.1rem;
-            color: var(--mist);
+        /* Description text */
+        .value-card > p {
+            font-size: 1.15rem;
+            color: var(--silver);
             line-height: 1.7;
-            max-width: 300px;
+            position: relative;
+            z-index: 3;
+            transition: all 0.3s ease;
+            margin: 0;
+        }
+
+        .value-card:hover > p {
+            color: var(--pearl);
         }
 
         /* Special styling for tall card (Innovation) */
         .value-card:nth-child(3) {
-            justify-content: space-between;
             padding: 3rem;
         }
 
         .value-card:nth-child(3) .value-icon-wrap {
-            width: 120px;
-            height: 120px;
+            width: 90px;
+            height: 90px;
         }
 
         .value-card:nth-child(3) .value-icon {
-            width: 55px;
-            height: 55px;
+            width: 45px;
+            height: 45px;
         }
 
-        .value-card:nth-child(3) h3 {
+        .value-card:nth-child(3) .value-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.5rem;
+        }
+
+        .value-card:nth-child(3) .value-header h3 {
             font-size: 2.5rem;
         }
 
-        .value-card:nth-child(3) p {
-            font-size: 1.2rem;
-            max-width: 100%;
+        .value-card:nth-child(3) > p {
+            font-size: 1.25rem;
         }
 
         /* Decorative corner */
@@ -1247,6 +1269,7 @@
             border-right: 1px solid var(--ash);
             border-bottom: 1px solid var(--ash);
             transition: all 0.4s ease;
+            z-index: 2;
         }
 
         .value-card:hover .value-corner {
@@ -1796,54 +1819,105 @@
 
         .contact-item a:hover { color: var(--gold-light); }
 
-        .contact-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .form-group label {
-            font-size: 0.95rem;
-            color: var(--mist);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            padding: 1.25rem;
+        /* Contact CTA Card */
+        .contact-cta-card {
             background: var(--graphite);
             border: 1px solid var(--slate);
-            color: var(--pearl);
-            font-family: var(--font-body);
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            cursor: none;
+            padding: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.4s var(--ease-out-expo);
         }
 
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
+        .contact-cta-card:hover {
             border-color: var(--gold);
-            background: var(--charcoal);
-            box-shadow: 0 0 20px rgba(240, 192, 90, 0.1);
+            transform: translateY(-5px);
         }
 
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
+        .contact-cta-content {
+            text-align: center;
+            max-width: 350px;
+        }
+
+        .contact-cta-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            background: var(--gold-pale);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-cta-icon svg {
+            width: 36px;
+            height: 36px;
+            stroke: var(--gold-light);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        .contact-cta-content h3 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 500;
+            color: var(--pearl);
+            margin-bottom: 1rem;
+        }
+
+        .contact-cta-content > p {
+            color: var(--mist);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .contact-cta-content .btn-primary {
+            width: 100%;
+            text-align: center;
+            display: block;
+        }
+
+        .contact-cta-alt {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--slate);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .contact-cta-alt span {
+            color: var(--mist);
+            font-size: 0.95rem;
+        }
+
+        .whatsapp-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #25D366;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-link svg {
+            width: 20px;
+            height: 20px;
+            fill: #25D366;
+        }
+
+        .whatsapp-link:hover {
+            color: #2eec76;
+        }
+
+        .whatsapp-link:hover svg {
+            fill: #2eec76;
         }
 
         /* ═══════════════════════════════════════
@@ -1942,13 +2016,16 @@
             .services-grid { grid-template-columns: repeat(2, 1fr); }
             .values-grid { 
                 grid-template-columns: repeat(6, 1fr);
-                grid-template-rows: repeat(3, 220px);
+                grid-template-rows: repeat(3, auto);
             }
             .value-card:nth-child(1) { grid-column: span 3; grid-row: span 1; }
             .value-card:nth-child(2) { grid-column: span 3; grid-row: span 1; }
             .value-card:nth-child(3) { grid-column: span 3; grid-row: span 2; }
             .value-card:nth-child(4) { grid-column: span 3; grid-row: span 1; }
             .value-card:nth-child(5) { grid-column: span 3; grid-row: span 1; }
+            .value-card { min-height: 200px; }
+            .value-header h3 { font-size: 1.85rem; }
+            .value-card > p { font-size: 1.05rem; }
         }
 
         @media (max-width: 992px) {
@@ -1973,10 +2050,13 @@
                 grid-row: span 1;
             }
             .value-card:nth-child(5) { grid-column: span 2; }
-            .value-card { min-height: 280px; }
-            .value-card:nth-child(3) .value-icon-wrap { width: 90px; height: 90px; }
-            .value-card:nth-child(3) .value-icon { width: 40px; height: 40px; }
-            .value-card:nth-child(3) h3 { font-size: 2rem; }
+            .value-card { min-height: 180px; }
+            .value-card:nth-child(3) .value-icon-wrap { width: 70px; height: 70px; }
+            .value-card:nth-child(3) .value-icon { width: 32px; height: 32px; }
+            .value-card:nth-child(3) .value-header { flex-direction: row; gap: 1.25rem; }
+            .value-card:nth-child(3) .value-header h3 { font-size: 1.85rem; }
+            .value-header h3 { font-size: 1.75rem; }
+            .value-card > p { font-size: 1rem; }
         }
 
         @media (max-width: 768px) {
@@ -1984,7 +2064,9 @@
             .services-grid { grid-template-columns: 1fr; }
             .values-grid { grid-template-columns: 1fr; }
             .value-card:nth-child(5) { grid-column: span 1; }
-            .value-card { min-height: 250px; }
+            .value-card { min-height: 160px; }
+            .value-header h3 { font-size: 1.6rem; }
+            .value-card > p { font-size: 0.95rem; }
             .form-row { grid-template-columns: 1fr; }
             .footer-content { flex-direction: column; gap: 2rem; text-align: center; }
             .about-stats { flex-direction: column; gap: 2rem; }
@@ -1993,11 +2075,13 @@
 
         @media (max-width: 480px) {
             .section-pad { padding: 4rem 1.5rem; }
-            .value-card { min-height: 220px; padding: 2rem; }
-            .value-icon-wrap { width: 70px; height: 70px; }
-            .value-icon { width: 32px; height: 32px; }
-            .value-card h3 { font-size: 1.6rem; }
-            .value-number { font-size: 3rem; }
+            .value-card { min-height: 140px; padding: 1.75rem; }
+            .value-icon-wrap { width: 55px; height: 55px; }
+            .value-icon { width: 26px; height: 26px; }
+            .value-header { gap: 1rem; margin-bottom: 1rem; }
+            .value-header h3 { font-size: 1.4rem; }
+            .value-card > p { font-size: 0.9rem; }
+            .value-number { font-size: 2.5rem; top: 1rem; right: 1rem; }
         }
     </style>
 </head>
@@ -2022,7 +2106,7 @@
                 <li><a href="javascript:void(0)" onclick="scrollToSection('values')">Values</a></li>
                 <li><a href="javascript:void(0)" onclick="scrollToSection('clients')">Clients</a></li>
             </ul>
-            <a href="javascript:void(0)" onclick="openModal()" class="nav-cta">Get Started</a>
+            <a href="javascript:void(0)" onclick="window.open('https://ee.kobotoolbox.org/x/aKvVyspA', '_blank')" class="nav-cta">Get Started</a>
             <div class="mobile-toggle">
                 <span></span>
                 <span></span>
@@ -2079,7 +2163,7 @@
             </h1>
             <p class="hero-subtitle">We transform organizations and build resilient teams across Africa and beyond.</p>
             <div class="hero-cta-group">
-                <a href="javascript:void(0)" onclick="openModal()" class="btn-primary">Start a Conversation</a>
+                <a href="javascript:void(0)" onclick="window.open('https://ee.kobotoolbox.org/x/aKvVyspA', '_blank')" class="btn-primary">Start a Conversation</a>
                 <a href="javascript:void(0)" onclick="scrollToSection('services')" class="btn-secondary">Our Expertise</a>
             </div>
         </div>
@@ -2221,110 +2305,110 @@
                 <!-- Trust - Wide Card -->
                 <div class="value-card reveal stagger-1">
                     <span class="value-number">01</span>
-                    <div class="value-icon-wrap">
-                        <svg class="value-icon-ring" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="45"/>
-                            <circle class="ring-progress" cx="50" cy="50" r="45"/>
-                        </svg>
-                        <div class="value-icon">
-                            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                                <path d="M9 12l2 2 4-4"/>
+                    <div class="value-header">
+                        <div class="value-icon-wrap">
+                            <svg class="value-icon-ring" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45"/>
+                                <circle class="ring-progress" cx="50" cy="50" r="45"/>
                             </svg>
+                            <div class="value-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    <path d="M9 12l2 2 4-4"/>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
-                    <div class="value-content">
                         <h3>Trust</h3>
-                        <p>Honesty and unwavering reliability form the bedrock of every partnership we build</p>
                     </div>
+                    <p>Honesty and unwavering reliability form the bedrock of every partnership we build</p>
                     <div class="value-corner"></div>
                 </div>
 
                 <!-- Collaboration -->
                 <div class="value-card reveal stagger-2">
                     <span class="value-number">02</span>
-                    <div class="value-icon-wrap">
-                        <svg class="value-icon-ring" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="45"/>
-                            <circle class="ring-progress" cx="50" cy="50" r="45"/>
-                        </svg>
-                        <div class="value-icon">
-                            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                <circle cx="9" cy="7" r="4"/>
-                                <path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
-                                <circle cx="17" cy="11" r="3"/>
-                                <path d="M21 21v-1.5a3 3 0 0 0-3-3h-1"/>
+                    <div class="value-header">
+                        <div class="value-icon-wrap">
+                            <svg class="value-icon-ring" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45"/>
+                                <circle class="ring-progress" cx="50" cy="50" r="45"/>
                             </svg>
+                            <div class="value-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M3 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/>
+                                    <circle cx="17" cy="11" r="3"/>
+                                    <path d="M21 21v-1.5a3 3 0 0 0-3-3h-1"/>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
-                    <div class="value-content">
                         <h3>Collaboration</h3>
-                        <p>Co-creating aligned solutions together</p>
                     </div>
+                    <p>Co-creating aligned solutions together</p>
                     <div class="value-corner"></div>
                 </div>
 
                 <!-- Innovation - Tall Card -->
                 <div class="value-card reveal stagger-3">
                     <span class="value-number">03</span>
-                    <div class="value-icon-wrap">
-                        <svg class="value-icon-ring" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="45"/>
-                            <circle class="ring-progress" cx="50" cy="50" r="45"/>
-                        </svg>
-                        <div class="value-icon">
-                            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-                                <circle cx="12" cy="12" r="4"/>
+                    <div class="value-header">
+                        <div class="value-icon-wrap">
+                            <svg class="value-icon-ring" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45"/>
+                                <circle class="ring-progress" cx="50" cy="50" r="45"/>
                             </svg>
+                            <div class="value-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                                    <circle cx="12" cy="12" r="4"/>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
-                    <div class="value-content">
                         <h3>Innovation</h3>
-                        <p>Pioneering cutting-edge approaches that challenge conventions and drive breakthrough results</p>
                     </div>
+                    <p>Pioneering cutting-edge approaches that challenge conventions and drive breakthrough results</p>
                     <div class="value-corner"></div>
                 </div>
 
                 <!-- Excellence -->
                 <div class="value-card reveal stagger-4">
                     <span class="value-number">04</span>
-                    <div class="value-icon-wrap">
-                        <svg class="value-icon-ring" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="45"/>
-                            <circle class="ring-progress" cx="50" cy="50" r="45"/>
-                        </svg>
-                        <div class="value-icon">
-                            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                    <div class="value-header">
+                        <div class="value-icon-wrap">
+                            <svg class="value-icon-ring" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45"/>
+                                <circle class="ring-progress" cx="50" cy="50" r="45"/>
                             </svg>
+                            <div class="value-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
-                    <div class="value-content">
                         <h3>Excellence</h3>
-                        <p>Measurable outcomes that exceed expectations</p>
                     </div>
+                    <p>Measurable outcomes that exceed expectations</p>
                     <div class="value-corner"></div>
                 </div>
 
                 <!-- Empathy - Wide Card -->
                 <div class="value-card reveal stagger-5">
                     <span class="value-number">05</span>
-                    <div class="value-icon-wrap">
-                        <svg class="value-icon-ring" viewBox="0 0 100 100">
-                            <circle cx="50" cy="50" r="45"/>
-                            <circle class="ring-progress" cx="50" cy="50" r="45"/>
-                        </svg>
-                        <div class="value-icon">
-                            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    <div class="value-header">
+                        <div class="value-icon-wrap">
+                            <svg class="value-icon-ring" viewBox="0 0 100 100">
+                                <circle cx="50" cy="50" r="45"/>
+                                <circle class="ring-progress" cx="50" cy="50" r="45"/>
                             </svg>
+                            <div class="value-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </div>
                         </div>
-                    </div>
-                    <div class="value-content">
                         <h3>Empathy</h3>
-                        <p>Genuinely invested in your success, understanding your challenges as our own</p>
                     </div>
+                    <p>Genuinely invested in your success, understanding your challenges as our own</p>
                     <div class="value-corner"></div>
                 </div>
             </div>
@@ -2361,7 +2445,7 @@
         <div class="cta-content reveal">
             <h2 class="cta-title">Ready to unlock your <em>full potential?</em></h2>
             <p class="cta-subtitle">Partner with KUZA for transformative growth.</p>
-            <a href="javascript:void(0)" onclick="openModal()" class="btn-primary">Let's Build Together</a>
+            <a href="javascript:void(0)" onclick="window.open('https://ee.kobotoolbox.org/x/aKvVyspA', '_blank')" class="btn-primary">Let's Build Together</a>
         </div>
     </section>
 
@@ -2387,36 +2471,25 @@
                         </div>
                     </div>
                 </div>
-                <form class="contact-form reveal-right" id="contactForm" action="https://formspree.io/f/mwpgqkbv" method="POST">
-                    <input type="hidden" name="_subject" value="New Lead from KUZA Website (Contact Form)">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" name="name" placeholder="John Doe" required>
+                <div class="contact-cta-card reveal-right">
+                    <div class="contact-cta-content">
+                        <div class="contact-cta-icon">
+                            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                            </svg>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" placeholder="john@company.com" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="organization">Organization</label>
-                            <input type="text" id="organization" name="organization" placeholder="Your Company">
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" name="subject" placeholder="How can we help?">
+                        <h3>Send us a message</h3>
+                        <p>Fill out our quick form and we'll get back to you within 24 hours.</p>
+                        <a href="javascript:void(0)" onclick="window.open('https://ee.kobotoolbox.org/x/aKvVyspA', '_blank')" class="btn-primary">Open Contact Form</a>
+                        <div class="contact-cta-alt">
+                            <span>Or reach us on</span>
+                            <a href="javascript:void(0)" onclick="window.open('https://wa.me/254727576677', '_blank')" class="whatsapp-link">
+                                <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                                WhatsApp
+                            </a>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="message">Your Message</label>
-                        <textarea id="message" name="message" placeholder="Tell us about your goals..."></textarea>
-                    </div>
-                    <div class="form-submit">
-                        <button type="submit" class="btn-primary">Send Message</button>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
     </section>
@@ -2434,62 +2507,6 @@
             <p class="footer-copyright">© 2025 KUZA Partners. All Rights Reserved.</p>
         </div>
     </footer>
-
-    <!-- Contact Modal -->
-    <div class="modal-overlay" id="contactModal">
-        <div class="modal-container">
-            <div class="modal-decor modal-decor-1"></div>
-            <div class="modal-decor modal-decor-2"></div>
-            
-            <div class="modal-header">
-                <button class="modal-close" onclick="closeModal()">&times;</button>
-                <span class="modal-badge">Let's Connect</span>
-                <h3 class="modal-title">Start your <em>transformation</em></h3>
-                <p class="modal-subtitle">Tell us about your goals and we'll reach out within 24 hours.</p>
-            </div>
-            
-            <div class="modal-body">
-                <form class="modal-form" id="modalForm" action="https://formspree.io/f/mwpgqkbv" method="POST">
-                    <input type="hidden" name="_subject" value="New Lead from KUZA Website (Modal)">
-                    <div class="modal-form-row">
-                        <div class="modal-form-group">
-                            <label for="modal-name">Full Name *</label>
-                            <input type="text" id="modal-name" name="name" placeholder="John Doe" required>
-                        </div>
-                        <div class="modal-form-group">
-                            <label for="modal-email">Email Address *</label>
-                            <input type="email" id="modal-email" name="email" placeholder="john@company.com" required>
-                        </div>
-                    </div>
-                    <div class="modal-form-row">
-                        <div class="modal-form-group">
-                            <label for="modal-company">Organization</label>
-                            <input type="text" id="modal-company" name="company" placeholder="Your Company">
-                        </div>
-                        <div class="modal-form-group">
-                            <label for="modal-interest">I'm Interested In</label>
-                            <select id="modal-interest" name="interest">
-                                <option value="">Select a service...</option>
-                                <option value="Training Programs">Training Programs</option>
-                                <option value="Consulting Services">Consulting Services</option>
-                                <option value="Custom Solutions">Custom Solutions</option>
-                                <option value="Something Else">Something Else</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="modal-form-group">
-                        <label for="modal-message">What's your biggest challenge?</label>
-                        <textarea id="modal-message" name="message" placeholder="Tell us what you're looking to achieve..."></textarea>
-                    </div>
-                    <button type="submit" class="modal-submit">Send Message</button>
-                </form>
-            </div>
-            
-            <div class="modal-footer">
-                <p class="modal-alt">Prefer to chat? <a href="javascript:void(0)" onclick="window.open('https://wa.me/254727576677', '_blank')">Message us on WhatsApp</a></p>
-            </div>
-        </div>
-    </div>
 
     <!-- Floating WhatsApp Button -->
     <a href="javascript:void(0)" onclick="window.open('https://wa.me/254727576677', '_blank')" class="whatsapp-btn">
@@ -2627,123 +2644,6 @@
             navLinks.style.flexDirection = 'column';
             navLinks.style.padding = '2rem';
             navLinks.style.gap = '1.5rem';
-        });
-
-        // ═══════════════════════════════════════
-        // FORM SUBMISSIONS (Formspree)
-        // ═══════════════════════════════════════
-        
-        // Helper to submit form via new window (works in Claude preview)
-        function submitFormToFormspree(form) {
-            const formData = new FormData(form);
-            const params = new URLSearchParams();
-            
-            for (let [key, value] of formData.entries()) {
-                params.append(key, value);
-            }
-            
-            // Open Formspree in new window with form data
-            const formspreeUrl = form.action;
-            
-            // Create a temporary form and submit it
-            const tempForm = document.createElement('form');
-            tempForm.method = 'POST';
-            tempForm.action = formspreeUrl;
-            tempForm.target = '_blank';
-            
-            for (let [key, value] of formData.entries()) {
-                const input = document.createElement('input');
-                input.type = 'hidden';
-                input.name = key;
-                input.value = value;
-                tempForm.appendChild(input);
-            }
-            
-            document.body.appendChild(tempForm);
-            tempForm.submit();
-            document.body.removeChild(tempForm);
-            
-            return true;
-        }
-        
-        // Contact form submission
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-            
-            submitFormToFormspree(this);
-            
-            // Reset after short delay
-            setTimeout(() => {
-                this.reset();
-                submitBtn.textContent = 'Sent ✓';
-                submitBtn.style.background = '#25D366';
-                
-                setTimeout(() => {
-                    submitBtn.textContent = originalText;
-                    submitBtn.style.background = '';
-                    submitBtn.disabled = false;
-                }, 2000);
-            }, 500);
-        });
-
-        // ═══════════════════════════════════════
-        // MODAL FUNCTIONS
-        // ═══════════════════════════════════════
-        const modal = document.getElementById('contactModal');
-        
-        function openModal() {
-            modal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        
-        function closeModal() {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        
-        // Close modal on overlay click
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-        
-        // Close modal on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.classList.contains('active')) {
-                closeModal();
-            }
-        });
-        
-        // Modal form submission
-        document.getElementById('modalForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const submitBtn = this.querySelector('button[type="submit"]');
-            const originalText = submitBtn.textContent;
-            
-            submitBtn.textContent = 'Sending...';
-            submitBtn.disabled = true;
-            
-            submitFormToFormspree(this);
-            
-            // Reset and close modal after short delay
-            setTimeout(() => {
-                this.reset();
-                submitBtn.textContent = 'Sent ✓';
-                submitBtn.style.background = '#25D366';
-                
-                setTimeout(() => {
-                    submitBtn.textContent = originalText;
-                    submitBtn.style.background = '';
-                    submitBtn.disabled = false;
-                    closeModal();
-                }, 1500);
-            }, 500);
         });
 
         // ═══════════════════════════════════════
