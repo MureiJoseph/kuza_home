@@ -126,4 +126,224 @@
 
         @media (max-width: 992px) {
             .nav-container { padding: 0 1.5rem; }
-            .
+            .mobile-toggle { display: flex; }
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%; left: 0; width: 100%;
+                background: var(--obsidian);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                text-align: center;
+                border-bottom: 1px solid var(--slate);
+            }
+            .nav-links.active { display: flex; }
+        }
+
+        /* ═══════════════════════════════════════
+           SECTIONS & RESPONSIVENESS
+        ═══════════════════════════════════════ */
+        .section-pad { padding: 8rem 4rem; }
+        @media (max-width: 768px) { .section-pad { padding: 4rem 1.5rem; } }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: var(--void);
+            padding: 2rem;
+        }
+        .hero-title { font-family: var(--font-display); font-size: clamp(2.5rem, 8vw, 5rem); line-height: 1.1; margin-bottom: 1.5rem; }
+        .hero-subtitle { font-size: 1.2rem; color: var(--silver); max-width: 700px; margin: 0 auto 3rem; }
+
+        .btn-primary {
+            display: inline-block;
+            padding: 1.25rem 2.5rem;
+            background: var(--gold);
+            color: var(--void);
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: 0.4s;
+        }
+        .btn-primary:hover { background: var(--gold-light); transform: translateY(-3px); }
+
+        /* TESTIMONIALS GRID FIX */
+        .client-testimonials {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        .client-testimonial-card {
+            background: var(--graphite);
+            border: 1px solid var(--slate);
+            padding: 2rem;
+            transition: 0.3s;
+        }
+        @media (max-width: 992px) { .client-testimonials { grid-template-columns: 1fr; } }
+
+        /* ABOUT GRID FIX */
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        @media (max-width: 992px) { .about-grid { grid-template-columns: 1fr; } .about-visual { display: none; } }
+
+        /* TMB PAGE STYLES */
+        .tmb-page { display: none; background: var(--obsidian); min-height: 100vh; padding-top: 100px; }
+        .tmb-page.active { display: block; }
+        .hidden { display: none !important; }
+        
+        footer { padding: 4rem; background: var(--void); text-align: center; border-top: 1px solid var(--slate); }
+    </style>
+</head>
+<body>
+
+    <div class="cursor"></div>
+    <div class="cursor-dot"></div>
+
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" onclick="location.reload()" class="logo">
+                <span class="logo-text">KUZA</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="javascript:void(0)" onclick="showTMB()">Programs</a></li>
+                <li><a href="#clients">Clients</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="mobile-toggle">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div id="mainContent">
+        <section class="hero">
+            <div class="hero-content">
+                <h1 class="hero-title">Nurturing Growth.<br><em>Empowering Success.</em></h1>
+                <p class="hero-subtitle">Architects of Organizational Excellence. Building resilient teams across Africa.</p>
+                <a href="https://ee.kobotoolbox.org/x/aKvVyspA" target="_blank" class="btn-primary">Start a Conversation</a>
+            </div>
+        </section>
+
+        <section id="about" class="section-pad">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-content">
+                        <h2 class="hero-title" style="font-size: 2.5rem;">Your <em>Growth Partners</em></h2>
+                        <p>Since 2018, we've combined 18+ years of expertise to unlock potential through strategic consulting.</p>
+                        <div style="display:flex; gap: 2rem; margin-top: 2rem;">
+                            <div><h3 style="color:var(--gold); font-size: 2.5rem;">18+</h3><small>Years</small></div>
+                            <div><h3 style="color:var(--gold); font-size: 2.5rem;">50+</h3><small>Projects</small></div>
+                        </div>
+                    </div>
+                    <div class="about-visual" style="height:300px; background:var(--graphite); border:1px solid var(--gold);"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="clients" class="section-pad" style="background:var(--charcoal);">
+            <div class="container">
+                <h2 class="hero-title" style="font-size: 2.5rem; text-align: center;">Organizations we've <em>Empowered</em></h2>
+                <div class="client-testimonials">
+                    <div class="client-testimonial-card">
+                        <h4 style="color:var(--gold);">Ascendance Rwanda</h4>
+                        <p style="font-style:italic; margin: 1rem 0;">"Thought partner for over 2 years, youth programme successfully implemented."</p>
+                    </div>
+                    <div class="client-testimonial-card">
+                        <h4 style="color:var(--gold);">Kenya Institute of Management</h4>
+                        <p style="font-style:italic; margin: 1rem 0;">"Implementation across several schools in Rwanda was well executed."</p>
+                    </div>
+                    <div class="client-testimonial-card">
+                        <h4 style="color:var(--gold);">Imbuto Foundation</h4>
+                        <p style="font-style:italic; margin: 1rem 0;">"Trusted partner in youth development across Rwanda."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section-pad">
+            <div class="container" style="text-align: center;">
+                <h2 class="hero-title" style="font-size: 2.5rem;">Let's <em>Talk</em></h2>
+                <p>info@kuzapartners.com | Nairobi, Kenya</p>
+                <br>
+                <a href="https://wa.me/254727576677" target="_blank" style="color:#25D366; text-decoration:none; font-weight:600;">WhatsApp Us</a>
+            </div>
+        </section>
+    </div>
+
+    <div id="tmbPage" class="tmb-page">
+        <div class="container" style="text-align: center; padding: 4rem;">
+            <h1 class="hero-title">THE MANAGER BRIDGE™</h1>
+            <p>8-Week Leadership Development Programme</p>
+            <br>
+            <button class="btn-primary" onclick="hideTMB()">Back to Home</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 KUZA Partners. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        const nav = document.querySelector('.nav');
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        const mainContent = document.getElementById('mainContent');
+        const tmbPage = document.getElementById('tmbPage');
+        let isScrolling;
+
+        // 1. Cursor Movement
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+            cursor.style.opacity = "1";
+            cursorDot.style.opacity = "1";
+        });
+
+        // 2. Hide Cursor on Scroll (Uncle Josee Fix)
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
+            cursor.style.opacity = "0";
+            cursorDot.style.opacity = "0";
+            
+            window.clearTimeout(isScrolling);
+            isScrolling = setTimeout(() => {
+                cursor.style.opacity = "1";
+                cursorDot.style.opacity = "1";
+            }, 150);
+        });
+
+        // 3. Mobile Menu Toggle
+        mobileToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // 4. Navigation Logic
+        function showTMB() {
+            mainContent.classList.add('hidden');
+            tmbPage.classList.add('active');
+            window.scrollTo(0,0);
+        }
+        function hideTMB() {
+            mainContent.classList.remove('hidden');
+            tmbPage.classList.remove('active');
+        }
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => navLinks.classList.remove('active'));
+        });
+    </script>
+</body>
+</html>
