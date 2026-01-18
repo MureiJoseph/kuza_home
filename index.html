@@ -75,34 +75,36 @@
         .cursor {
             width: 30px;
             height: 30px;
-            border: 1px solid var(--gold-light);
+            border: 1.5px solid rgba(212, 168, 75, 0.5);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 9999999;
-            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.15s ease;
+            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.15s ease, border-color 0.2s ease;
             transform: translate(-50%, -50%);
             will-change: left, top, transform;
+            opacity: 0.6;
         }
 
         .cursor-dot {
-            width: 5px;
-            height: 5px;
-            background: var(--gold);
+            width: 4px;
+            height: 4px;
+            background: rgba(212, 168, 75, 0.7);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 10000000;
             transform: translate(-50%, -50%);
             will-change: left, top;
-            transition: opacity 0.15s ease;
+            transition: opacity 0.15s ease, background 0.2s ease;
         }
 
         .cursor.hover {
             width: 50px;
             height: 50px;
-            background: rgba(240, 192, 90, 0.1);
-            border-color: var(--gold);
+            background: rgba(212, 168, 75, 0.08);
+            border-color: rgba(212, 168, 75, 0.8);
+            opacity: 1;
         }
 
         @media (max-width: 768px) {
@@ -240,16 +242,32 @@
         .mobile-toggle {
             display: none;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
             cursor: pointer;
-            padding: 10px;
+            padding: 8px;
+            background: transparent;
+            border: none;
+            z-index: 9999;
         }
 
         .mobile-toggle span {
-            width: 28px;
-            height: 2px;
-            background: var(--gold-light);
+            width: 26px;
+            height: 2.5px;
+            background: var(--gold);
             transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translateY(10px);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translateY(-10px);
         }
 
         /* ═══════════════════════════════════════
@@ -3749,15 +3767,32 @@
         const navLinks = document.querySelector('.nav-links');
         
         mobileToggle.addEventListener('click', () => {
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '100%';
-            navLinks.style.left = '0';
-            navLinks.style.right = '0';
-            navLinks.style.background = 'rgba(10, 10, 10, 0.98)';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.padding = '2rem';
-            navLinks.style.gap = '1.5rem';
+            const isActive = navLinks.classList.toggle('active');
+            mobileToggle.classList.toggle('active');
+            
+            if (isActive) {
+                navLinks.style.display = 'flex';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.right = '0';
+                navLinks.style.background = 'rgba(10, 10, 10, 0.98)';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.padding = '2rem';
+                navLinks.style.gap = '1.5rem';
+                navLinks.style.zIndex = '999';
+            } else {
+                navLinks.style.display = 'none';
+            }
+        });
+        
+        // Close mobile menu when a link is clicked
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                mobileToggle.classList.remove('active');
+                navLinks.style.display = 'none';
+            });
         });
 
         // ═══════════════════════════════════════
