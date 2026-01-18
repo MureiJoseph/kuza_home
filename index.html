@@ -79,8 +79,8 @@
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 99999;
-            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background 0.2s ease;
+            z-index: 9999999;
+            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background 0.2s ease, opacity 0.15s ease;
             transform: translate(-50%, -50%);
             will-change: left, top, transform;
         }
@@ -92,9 +92,10 @@
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 99999;
+            z-index: 10000000;
             transform: translate(-50%, -50%);
             will-change: left, top;
+            transition: opacity 0.15s ease;
         }
 
         .cursor.hover {
@@ -423,9 +424,6 @@
             display: block;
             opacity: 1;
         }
-
-        .hero-title .line:nth-child(1) span { }
-        .hero-title .line:nth-child(2) span { }
 
         @keyframes slideUp {
             to { opacity: 1; transform: translateY(0); }
@@ -2723,8 +2721,28 @@
         @media (max-width: 992px) {
             .section-pad { padding: 5rem 2rem; }
             .nav-container { padding: 0 2rem; }
+            .mobile-toggle {
+                display: flex !important;
+                flex-direction: column;
+                gap: 6px;
+            }
+            .mobile-toggle span {
+                display: block;
+                width: 28px;
+                height: 2px;
+                background: var(--gold-light);
+            }
             .nav-links { display: none; }
-            .mobile-toggle { display: flex; }
+            .nav-links.active {
+                display: flex !important;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--obsidian);
+                flex-direction: column;
+                padding: 2rem;
+            }
             .about-grid,
             .contact-grid { grid-template-columns: 1fr; }
             .client-feature { grid-template-columns: 1fr; }
@@ -3707,6 +3725,24 @@
         window.addEventListener('load', revealOnScroll);
 
         // ═══════════════════════════════════════
+        // SCROLL HIDE CURSOR
+        // ═══════════════════════════════════════
+        let isScrolling;
+        window.addEventListener('scroll', () => {
+            // Hide cursor during scroll
+            cursor.style.opacity = '0';
+            cursorDot.style.opacity = '0';
+
+            window.clearTimeout(isScrolling);
+
+            // Re-show cursor 150ms after scroll stops
+            isScrolling = setTimeout(() => {
+                cursor.style.opacity = '1';
+                cursorDot.style.opacity = '1';
+            }, 150);
+        });
+
+        // ═══════════════════════════════════════
         // MOBILE MENU
         // ═══════════════════════════════════════
         const mobileToggle = document.querySelector('.mobile-toggle');
@@ -3740,6 +3776,10 @@
                 const rotateX = (y - centerY) / 15;
                 const rotateY = (centerX - x) / 15;
                 
-                card.style.transform = `translateY(-15px) rotateX(${rotateX}deg)
-kuza.html
+                card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+        });
+    </script>
+</body>
+</html>
 Displaying kuza.html.
