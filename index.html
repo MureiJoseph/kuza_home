@@ -1,69 +1,3 @@
-Conversation opened. 3 messages. All messages read.
-
-Skip to content
-Using Gmail with screen readers
-kuzapartners@gmail.com 
-1 of 1
-Github Webhost login credentials
-Inbox
-
-
-KUZA Partners <kuzapartners@gmail.com>
-Attachments
-Jan 11, 2026, 6:59 PM (8 days ago)
-to me
-
-Hey Kingsley,
-Github access
-Username: MureiJoseph
-Password: Mer@1989
-
-Truehost - 
-Web hosting link 
-Username: josephmureic@gmail.com
-Password: 3JijQ*fxwuMtvu8
-
-I have also attached the HTML file that I want uploaded to GitHub to be reflected on the Kuza website.
-
-
-Regards,
-
---
-	
- One attachment
-  •  Scanned by Gmail
-
-Kingsley koech <kingsleykoech@gmail.com>
-Jan 13, 2026, 9:45 AM (6 days ago)
-to KUZA
-
-Hi,
-
-I have successfully uploaded the HTML file to GitHub. The only remaining task is to connect the Truehost cPanel and GitHub to ensure the changes are reflected on the website.
-
-image.png
-
-
-
-KUZA Partners
-Jan 13, 2026, 10:56 AM (6 days ago)
-to me
-
-Hey Kingsley,
- I don't think you should connect Github to Truehost (unless you think that is a better way).
-
-The person who pushed it to the website domain last time did it directly from GitHub, and it reflected immediately on the website. 
-
-Review that option first before connecting GitHub and Truehost, unless, of course, you think that is the easiest and cleanest way.
-
-
---
-	
-Mercy
-
-Operations, KUZA Partners
-
-kuzapartners@gmail.com. Press tab to insert.
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -139,58 +73,39 @@ kuzapartners@gmail.com. Press tab to insert.
            CUSTOM CURSOR
         ═══════════════════════════════════════ */
         .cursor {
-            width: 30px;
-            height: 30px;
-            border: 1px solid var(--gold-light);
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--gold-light);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 99999;
-            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background 0.2s ease;
             transform: translate(-50%, -50%);
-            will-change: left, top, transform;
+            left: 0;
+            top: 0;
         }
 
         .cursor-dot {
-            width: 5px;
-            height: 5px;
-            background: var(--gold);
+            width: 6px;
+            height: 6px;
+            background: var(--gold-light);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
             z-index: 99999;
             transform: translate(-50%, -50%);
-            will-change: left, top;
-        }
-
-        .cursor.hover {
-            width: 50px;
-            height: 50px;
-            background: rgba(240, 192, 90, 0.1);
-            border-color: var(--gold);
+            left: 0;
+            top: 0;
         }
 
         @media (max-width: 768px) {
-            body { cursor: auto; }
-            .cursor, .cursor-dot { display: none; }
+            .cursor, .cursor-dot {
+                display: none !important;
+            }
+        }
         }
 
-        /* ═══════════════════════════════════════
-           MOUSE GLOW
-        ═══════════════════════════════════════ */
-        .mouse-glow {
-            position: fixed;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(240, 192, 90, 0.08) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 1;
-            transform: translate(-50%, -50%);
-            transition: opacity 0.3s ease;
-            opacity: 0;
-        }
 
-        .mouse-glow.active { opacity: 1; }
 
         /* ═══════════════════════════════════════
            NAVIGATION
@@ -216,7 +131,7 @@ kuzapartners@gmail.com. Press tab to insert.
         .nav-container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 4rem;
+            padding: 0 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -316,6 +231,29 @@ kuzapartners@gmail.com. Press tab to insert.
             background: var(--gold-light);
             transition: all 0.3s ease;
         }
+        
+        @media (max-width: 992px) {
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 10, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 2rem;
+                gap: 1.5rem;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                display: flex;
+            }
+            
+            .nav-links.active {
+                transform: translateX(0);
+            }
+            
+            .mobile-toggle { display: flex; }
+        }
 
         /* ═══════════════════════════════════════
            HERO SECTION - WITH SHAPES & EFFECTS
@@ -327,6 +265,7 @@ kuzapartners@gmail.com. Press tab to insert.
             justify-content: center;
             position: relative;
             overflow: hidden;
+            padding: 0 2rem;
         }
 
         /* Animated Background */
@@ -474,7 +413,7 @@ kuzapartners@gmail.com. Press tab to insert.
 
         .hero-title {
             font-family: var(--font-display);
-            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-size: clamp(2rem, 8vw, 5rem);
             font-weight: 400;
             line-height: 1.1;
             margin-bottom: 2rem;
@@ -503,7 +442,7 @@ kuzapartners@gmail.com. Press tab to insert.
         }
 
         .hero-subtitle {
-            font-size: 1.4rem;
+            font-size: clamp(1rem, 4vw, 1.4rem);
             font-weight: 300;
             color: var(--silver);
             max-width: 600px;
@@ -520,12 +459,12 @@ kuzapartners@gmail.com. Press tab to insert.
         }
 
         .btn-primary {
-            padding: 1.25rem 3rem;
+            padding: 1.15rem 2.5rem;
             background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
             border: none;
             color: var(--void);
             font-family: var(--font-body);
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
             letter-spacing: 0.15em;
             text-transform: uppercase;
@@ -555,12 +494,12 @@ kuzapartners@gmail.com. Press tab to insert.
         .btn-primary:hover::before { left: 100%; }
 
         .btn-secondary {
-            padding: 1.25rem 3rem;
+            padding: 1.15rem 2.5rem;
             background: transparent;
             border: 1px solid var(--ash);
             color: var(--pearl);
             font-family: var(--font-body);
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 500;
             letter-spacing: 0.15em;
             text-transform: uppercase;
@@ -2789,11 +2728,17 @@ kuzapartners@gmail.com. Press tab to insert.
         @media (max-width: 992px) {
             .section-pad { padding: 5rem 2rem; }
             .nav-container { padding: 0 2rem; }
-            .nav-links { display: none; }
-            .mobile-toggle { display: flex; }
             .about-grid,
-            .contact-grid { grid-template-columns: 1fr; }
-            .client-feature { grid-template-columns: 1fr; }
+            .contact-grid,
+            .client-feature {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
             .purpose-section { grid-template-columns: 1fr; text-align: center; justify-items: center; }
             .values-grid {
                 grid-template-columns: 1fr 1fr;
@@ -2819,6 +2764,9 @@ kuzapartners@gmail.com. Press tab to insert.
 
         @media (max-width: 768px) {
             body { font-size: 16px; }
+            .section-pad {
+                padding: 4rem 1.5rem;
+            }
             .services-grid { grid-template-columns: 1fr; }
             .values-grid { grid-template-columns: 1fr; }
             .value-card:nth-child(5) { grid-column: span 1; }
@@ -3688,45 +3636,38 @@ kuzapartners@gmail.com. Press tab to insert.
         // ═══════════════════════════════════════
         // CUSTOM CURSOR
         // ═══════════════════════════════════════
-        (function() {
-            var cursor = document.querySelector('.cursor');
-            var cursorDot = document.querySelector('.cursor-dot');
-            var mouseGlow = document.querySelector('.mouse-glow');
+        const cursor = document.querySelector('.cursor');
+        const cursorDot = document.querySelector('.cursor-dot');
+        
+        if (cursor && cursorDot) {
+            let mouseX = 0;
+            let mouseY = 0;
             
-            if (!cursor || !cursorDot) return;
-            
-            var mouseX = 0, mouseY = 0;
-            var cursorX = 0, cursorY = 0;
-            
-            document.addEventListener('mousemove', function(e) {
+            document.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
                 
+                // Move cursor circle
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+                
+                // Move cursor dot
                 cursorDot.style.left = mouseX + 'px';
                 cursorDot.style.top = mouseY + 'px';
-                
-                if (mouseGlow) {
-                    mouseGlow.style.left = mouseX + 'px';
-                    mouseGlow.style.top = mouseY + 'px';
-                    mouseGlow.classList.add('active');
-                }
             });
             
-            function animateCursor() {
-                cursorX += (mouseX - cursorX) * 0.15;
-                cursorY += (mouseY - cursorY) * 0.15;
-                cursor.style.left = cursorX + 'px';
-                cursor.style.top = cursorY + 'px';
-                requestAnimationFrame(animateCursor);
-            }
-            animateCursor();
+            // Hide cursor on mouse leave
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+                cursorDot.style.opacity = '0';
+            });
             
-            var hoverElements = document.querySelectorAll('a, button, .service-card, .value-card, .stat-item, .purpose-section');
-            for (var i = 0; i < hoverElements.length; i++) {
-                hoverElements[i].addEventListener('mouseenter', function() { cursor.classList.add('hover'); });
-                hoverElements[i].addEventListener('mouseleave', function() { cursor.classList.remove('hover'); });
-            }
-        })();
+            // Show cursor on mouse enter
+            document.addEventListener('mouseenter', () => {
+                cursor.style.opacity = '1';
+                cursorDot.style.opacity = '1';
+            });
+        }
 
         // ═══════════════════════════════════════
         // PARALLAX SHAPES
@@ -3777,18 +3718,21 @@ kuzapartners@gmail.com. Press tab to insert.
         // ═══════════════════════════════════════
         const mobileToggle = document.querySelector('.mobile-toggle');
         const navLinks = document.querySelector('.nav-links');
-        
-        mobileToggle.addEventListener('click', () => {
-            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '100%';
-            navLinks.style.left = '0';
-            navLinks.style.right = '0';
-            navLinks.style.background = 'rgba(10, 10, 10, 0.98)';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.padding = '2rem';
-            navLinks.style.gap = '1.5rem';
-        });
+
+        if (mobileToggle) {
+            mobileToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('active');
+                mobileToggle.classList.toggle('active');
+            });
+
+            // Close menu when clicking links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                    mobileToggle.classList.remove('active');
+                });
+            });
+        }
 
         // ═══════════════════════════════════════
         // 3D CARD TILT
