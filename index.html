@@ -1,3 +1,69 @@
+Conversation opened. 3 messages. All messages read.
+
+Skip to content
+Using Gmail with screen readers
+kuzapartners@gmail.com 
+1 of 1
+Github Webhost login credentials
+Inbox
+
+
+KUZA Partners <kuzapartners@gmail.com>
+Attachments
+Jan 11, 2026, 6:59 PM (8 days ago)
+to me
+
+Hey Kingsley,
+Github access
+Username: MureiJoseph
+Password: Mer@1989
+
+Truehost - 
+Web hosting link 
+Username: josephmureic@gmail.com
+Password: 3JijQ*fxwuMtvu8
+
+I have also attached the HTML file that I want uploaded to GitHub to be reflected on the Kuza website.
+
+
+Regards,
+
+--
+	
+ One attachment
+  •  Scanned by Gmail
+
+Kingsley koech <kingsleykoech@gmail.com>
+Jan 13, 2026, 9:45 AM (6 days ago)
+to KUZA
+
+Hi,
+
+I have successfully uploaded the HTML file to GitHub. The only remaining task is to connect the Truehost cPanel and GitHub to ensure the changes are reflected on the website.
+
+image.png
+
+
+
+KUZA Partners
+Jan 13, 2026, 10:56 AM (6 days ago)
+to me
+
+Hey Kingsley,
+ I don't think you should connect Github to Truehost (unless you think that is a better way).
+
+The person who pushed it to the website domain last time did it directly from GitHub, and it reflected immediately on the website. 
+
+Review that option first before connecting GitHub and Truehost, unless, of course, you think that is the easiest and cleanest way.
+
+
+--
+	
+Mercy
+
+Operations, KUZA Partners
+
+kuzapartners@gmail.com. Press tab to insert.
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,24 +139,35 @@
            CUSTOM CURSOR
         ═══════════════════════════════════════ */
         .cursor {
-            width: 8px;
-            height: 8px;
-            background: rgba(212, 168, 75, 0.8);
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--gold-light);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 9999999;
-            transition: transform 0.1s ease-out, background 0.2s ease;
+            z-index: 99999;
+            transition: transform 0.1s ease-out, width 0.2s ease, height 0.2s ease, background 0.2s ease;
             transform: translate(-50%, -50%);
             will-change: left, top, transform;
         }
 
         .cursor-dot {
-            display: none;
+            width: 5px;
+            height: 5px;
+            background: var(--gold);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            will-change: left, top;
         }
 
         .cursor.hover {
-            background: rgba(212, 168, 75, 1);
+            width: 50px;
+            height: 50px;
+            background: rgba(240, 192, 90, 0.1);
+            border-color: var(--gold);
         }
 
         @media (max-width: 768px) {
@@ -228,36 +305,16 @@
         .mobile-toggle {
             display: none;
             flex-direction: column;
-            gap: 5px;
+            gap: 6px;
             cursor: pointer;
-            padding: 8px;
-            background: transparent;
-            border: none;
-            z-index: 9999;
+            padding: 10px;
         }
 
         .mobile-toggle span {
-            width: 26px;
-            height: 2.5px;
-            background: var(--gold);
+            width: 28px;
+            height: 2px;
+            background: var(--gold-light);
             transition: all 0.3s ease;
-            border-radius: 2px;
-        }
-
-        .mobile-toggle.active {
-            background: transparent;
-        }
-
-        .mobile-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translateY(10px);
-        }
-
-        .mobile-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .mobile-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translateY(-10px);
         }
 
         /* ═══════════════════════════════════════
@@ -432,6 +489,9 @@
             display: block;
             opacity: 1;
         }
+
+        .hero-title .line:nth-child(1) span { }
+        .hero-title .line:nth-child(2) span { }
 
         @keyframes slideUp {
             to { opacity: 1; transform: translateY(0); }
@@ -2708,41 +2768,6 @@
         }
 
         /* ═══════════════════════════════════════
-           MOBILE PROFESSIONAL STYLING
-        ═══════════════════════════════════════ */
-        @media (max-width: 992px) {
-            .hero-tagline { font-size: 0.9rem; letter-spacing: 0.3em; margin-bottom: 1.5rem; }
-            .hero-title { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1.5rem; }
-            .hero-subtitle { font-size: 1.1rem; margin-bottom: 2.5rem; }
-            .hero-cta-group { gap: 1rem; }
-            .btn-primary, .btn-secondary { padding: 1rem 2.5rem; font-size: 0.95rem; }
-            .section-title { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 2.5rem; }
-        }
-
-        @media (max-width: 768px) {
-            .hero { padding: 8rem 0 4rem; }
-            .hero-tagline { font-size: 0.85rem; margin-bottom: 1.25rem; }
-            .hero-title { font-size: clamp(1.8rem, 4.5vw, 3rem); line-height: 1.15; margin-bottom: 1.25rem; }
-            .hero-subtitle { font-size: 1rem; margin-bottom: 2rem; }
-            .hero-cta-group { flex-direction: column; gap: 1rem; }
-            .btn-primary, .btn-secondary { width: 100%; max-width: 400px; padding: 0.95rem 2rem; }
-            .hero-scroll { display: none; }
-            .section-title { font-size: clamp(1.8rem, 4.5vw, 2.8rem); margin-bottom: 2rem; }
-            .modal-container { border-radius: 12px; }
-        }
-
-        @media (max-width: 480px) {
-            .hero { padding: 6rem 0 3rem; }
-            .hero-tagline { font-size: 0.8rem; letter-spacing: 0.25em; margin-bottom: 1rem; }
-            .hero-title { font-size: clamp(1.5rem, 4vw, 2.5rem); margin-bottom: 1rem; }
-            .hero-subtitle { font-size: 0.95rem; margin-bottom: 1.5rem; line-height: 1.6; }
-            .hero-cta-group { gap: 0.75rem; }
-            .btn-primary, .btn-secondary { padding: 0.85rem 1.75rem; font-size: 0.9rem; }
-            .section-title { font-size: clamp(1.6rem, 3.5vw, 2.2rem); margin-bottom: 1.75rem; }
-            .section-pad { padding: 3rem 1.5rem; }
-        }
-
-        /* ═══════════════════════════════════════
            RESPONSIVE
         ═══════════════════════════════════════ */
         @media (max-width: 1200px) {
@@ -2763,39 +2788,9 @@
 
         @media (max-width: 992px) {
             .section-pad { padding: 5rem 2rem; }
-            .nav-container { 
-                padding: 0 2rem; 
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .mobile-toggle {
-                display: none !important;
-            }
-            .nav-links { 
-                display: flex !important;
-                position: static;
-                gap: 1.5rem;
-                padding: 0;
-                background: transparent;
-                flex-direction: row;
-                flex-wrap: wrap;
-                justify-content: flex-start;
-                max-height: none;
-                overflow: visible;
-                z-index: auto;
-                border: none;
-            }
-            .nav-links a {
-                padding: 0.5rem 0;
-                font-size: 0.85rem;
-                letter-spacing: 0.08em;
-                border-bottom: none;
-                transition: all 0.3s ease;
-            }
-            .nav-links a:hover {
-                padding-left: 0;
-                color: var(--gold-light);
-            }
+            .nav-container { padding: 0 2rem; }
+            .nav-links { display: none; }
+            .mobile-toggle { display: flex; }
             .about-grid,
             .contact-grid { grid-template-columns: 1fr; }
             .client-feature { grid-template-columns: 1fr; }
@@ -2823,35 +2818,28 @@
         }
 
         @media (max-width: 768px) {
-            body { font-size: 16px; line-height: 1.6; }
-            .services-grid { grid-template-columns: 1fr; gap: 2rem; }
-            .values-grid { grid-template-columns: 1fr; gap: 2rem; }
+            body { font-size: 16px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .values-grid { grid-template-columns: 1fr; }
             .value-card:nth-child(5) { grid-column: span 1; }
-            .value-card { min-height: 160px; padding: 2rem; }
-            .value-header h3 { font-size: 1.6rem; font-weight: 600; }
-            .value-card > p { font-size: 0.95rem; line-height: 1.7; }
-            .form-row { grid-template-columns: 1fr; gap: 1.5rem; }
-            .footer-content { flex-direction: column; gap: 2.5rem; text-align: center; }
+            .value-card { min-height: 160px; }
+            .value-header h3 { font-size: 1.6rem; }
+            .value-card > p { font-size: 0.95rem; }
+            .form-row { grid-template-columns: 1fr; }
+            .footer-content { flex-direction: column; gap: 2rem; text-align: center; }
             .about-stats { flex-direction: column; gap: 2rem; }
             .shape { display: none; }
-            button, .cta-btn { padding: 1rem 2rem; font-size: 1rem; min-height: 48px; }
-            input, textarea, select { padding: 0.875rem 1rem; font-size: 1rem; }
         }
 
         @media (max-width: 480px) {
-            .section-pad { padding: 3.5rem 1.5rem; }
-            .nav-container { padding: 1rem 1.5rem; }
-            .value-card { min-height: 140px; padding: 1.75rem; gap: 1rem; }
+            .section-pad { padding: 4rem 1.5rem; }
+            .value-card { min-height: 140px; padding: 1.75rem; }
             .value-icon-wrap { width: 55px; height: 55px; }
             .value-icon { width: 26px; height: 26px; }
             .value-header { gap: 1rem; margin-bottom: 1rem; }
-            .value-header h3 { font-size: 1.35rem; font-weight: 600; }
-            .value-card > p { font-size: 0.9rem; line-height: 1.6; }
+            .value-header h3 { font-size: 1.4rem; }
+            .value-card > p { font-size: 0.9rem; }
             .value-number { font-size: 2.5rem; top: 1rem; right: 1rem; }
-            h1 { font-size: 2.2rem; line-height: 1.3; }
-            h2 { font-size: 1.8rem; }
-            h3 { font-size: 1.4rem; }
-            button, .cta-btn { padding: 0.9rem 1.8rem; font-size: 0.95rem; }
         }
 
         /* TMB Responsive */
@@ -3785,56 +3773,21 @@
         window.addEventListener('load', revealOnScroll);
 
         // ═══════════════════════════════════════
-        // SCROLL HIDE CURSOR
-        // ═══════════════════════════════════════
-        let isScrolling;
-        window.addEventListener('scroll', () => {
-            // Hide cursor during scroll
-            cursor.style.opacity = '0';
-            cursorDot.style.opacity = '0';
-
-            window.clearTimeout(isScrolling);
-
-            // Re-show cursor 150ms after scroll stops
-            isScrolling = setTimeout(() => {
-                cursor.style.opacity = '1';
-                cursorDot.style.opacity = '1';
-            }, 150);
-        });
-
-        // ═══════════════════════════════════════
         // MOBILE MENU
         // ═══════════════════════════════════════
         const mobileToggle = document.querySelector('.mobile-toggle');
         const navLinks = document.querySelector('.nav-links');
         
         mobileToggle.addEventListener('click', () => {
-            const isActive = navLinks.classList.toggle('active');
-            mobileToggle.classList.toggle('active');
-            
-            if (isActive) {
-                navLinks.style.display = 'flex';
-                navLinks.style.position = 'absolute';
-                navLinks.style.top = '100%';
-                navLinks.style.left = '0';
-                navLinks.style.right = '0';
-                navLinks.style.background = 'rgba(10, 10, 10, 0.98)';
-                navLinks.style.flexDirection = 'column';
-                navLinks.style.padding = '2rem';
-                navLinks.style.gap = '1.5rem';
-                navLinks.style.zIndex = '999';
-            } else {
-                navLinks.style.display = 'none';
-            }
-        });
-        
-        // Close mobile menu when a link is clicked
-        navLinks.querySelectorAll('a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinks.classList.remove('active');
-                mobileToggle.classList.remove('active');
-                navLinks.style.display = 'none';
-            });
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '100%';
+            navLinks.style.left = '0';
+            navLinks.style.right = '0';
+            navLinks.style.background = 'rgba(10, 10, 10, 0.98)';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.padding = '2rem';
+            navLinks.style.gap = '1.5rem';
         });
 
         // ═══════════════════════════════════════
@@ -3853,10 +3806,6 @@
                 const rotateX = (y - centerY) / 15;
                 const rotateY = (centerX - x) / 15;
                 
-                card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-            });
-        });
-    </script>
-</body>
-</html>
+                card.style.transform = `translateY(-15px) rotateX(${rotateX}deg)
+kuza.html
 Displaying kuza.html.
