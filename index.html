@@ -244,6 +244,10 @@
             border-radius: 2px;
         }
 
+        .mobile-toggle.active {
+            background: transparent;
+        }
+
         .mobile-toggle.active span:nth-child(1) {
             transform: rotate(45deg) translateY(10px);
         }
@@ -2781,22 +2785,26 @@
             .nav-links { display: none; }
             .nav-links.active {
                 display: flex !important;
-                position: absolute;
-                top: 100%;
+                position: fixed;
+                top: 65px;
                 left: 0;
                 width: 100%;
-                background: rgba(10, 10, 10, 0.99);
-                backdrop-filter: blur(10px);
+                height: calc(100vh - 65px);
+                background: var(--obsidian);
                 flex-direction: column;
                 padding: 2rem 1.5rem;
                 gap: 1.5rem;
-                border-top: 1px solid var(--slate);
                 z-index: 998;
+                overflow-y: auto;
             }
             .nav-links.active a {
-                padding: 1rem 0;
+                padding: 0.75rem 0;
                 font-size: 1.1rem;
                 letter-spacing: 0.5px;
+                border-bottom: 1px solid rgba(212, 168, 75, 0.1);
+            }
+            .nav-links.active a:last-child {
+                border-bottom: none;
             }
             .about-grid,
             .contact-grid { grid-template-columns: 1fr; }
