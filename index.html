@@ -72,30 +72,31 @@
         /* ═══════════════════════════════════════
            CUSTOM CURSOR
         ═══════════════════════════════════════ */
+        /* Custom Cursor Fixes */
         .cursor {
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--gold-light);
+            width: 30px;
+            height: 30px;
+            border: 1px solid var(--gold-light);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 99999;
+            z-index: 9999999; /* Higher than everything else */
+            transition: transform 0.1s ease-out, opacity 0.3s ease;
             transform: translate(-50%, -50%);
-            left: 0;
-            top: 0;
+            display: block;
         }
 
         .cursor-dot {
             width: 6px;
             height: 6px;
-            background: var(--gold-light);
+            background: var(--gold);
             border-radius: 50%;
             position: fixed;
             pointer-events: none;
-            z-index: 99999;
+            z-index: 10000000; /* Even higher than the outer ring */
+            transition: opacity 0.3s ease;
             transform: translate(-50%, -50%);
-            left: 0;
-            top: 0;
+            display: block;
         }
 
         @media (max-width: 768px) {
