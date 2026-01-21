@@ -1,0 +1,13 @@
+/* ═══════════════════════════════════════
+   DISABLE CURSOR & HOVER ON TOUCH DEVICES
+═══════════════════════════════════════ */
+@media (hover: none) and (pointer: coarse) {
+    * {
+        cursor: auto !important;
+    }
+
+    .cursor,
+    .cursor-dot {
+        display: none !important;
+    }
+}
