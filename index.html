@@ -217,13 +217,17 @@
             color: var(--void);
             box-shadow: 0 0 40px rgba(240, 192, 90, 0.3);
         }
-
         .mobile-toggle {
             display: none;
             flex-direction: column;
             gap: 6px;
             cursor: pointer;
             padding: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-toggle { display: flex; }
+        }
         }
 
         .mobile-toggle span {
