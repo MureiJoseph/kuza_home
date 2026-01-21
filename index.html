@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,18 +58,11 @@
             font-weight: 300;
             font-size: 18px;
             overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent;
+            cursor: none;
         }
 
         a, button, input, textarea, select {
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        /* Only hide the default cursor on devices that support the custom one */
-        @media (pointer: fine) {
-            body, a, button, input, textarea, select {
-                cursor: none;
-            }
+            cursor: none;
         }
 
         ::selection {
@@ -76,48 +70,40 @@
             color: var(--void);
         }
 
-        /* ═══════════════════════════════════════
-           CUSTOM CURSOR
-        ═══════════════════════════════════════ */
-        /* Custom Cursor Fixes */
-        .cursor {
-            width: 30px;
-            height: 30px;
-            border: 1px solid var(--gold-light);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 9999999; /* Higher than everything else */
-            transition: transform 0.1s ease-out, opacity 0.3s ease;
-            transform: translate(-50%, -50%);
-            display: block;
-        }
+/* ═══════════════════════════════════════
+   CUSTOM CURSOR - ALWAYS VISIBLE FIX
+═══════════════════════════════════════ */
+.cursor {
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--gold-light);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999999;
+    opacity: 1; /* Forced visible */
+    transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 8px rgba(240, 192, 90, 0.3);
+    display: block; /* Ensure it's not removed */
+}
 
-        .cursor-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--gold);
-            border-radius: 50%;
-            position: fixed;
-            pointer-events: none;
-            z-index: 10000000; /* Even higher than the outer ring */
-            transition: opacity 0.3s ease;
-            transform: translate(-50%, -50%);
-            display: block;
-        }
+.cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--gold-light);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 10000000;
+    opacity: 1; /* Forced visible */
+    box-shadow: 0 0 10px rgba(240, 192, 90, 0.8);
+    transition: opacity 0.3s ease;
+    transform: translate(-50%, -50%);
+    display: block;
+}
 
-        /* Disable cursor on touch devices */
-        @media (hover: none) and (pointer: coarse) {
-            * {
-                cursor: auto !important;
-            }
-
-            .cursor,
-            .cursor-dot {
-                display: none !important;
-            }
-        }
-
+/* Remove the @media queries entirely to stop the auto-hiding */
         /* ═══════════════════════════════════════
            NAVIGATION
         ═══════════════════════════════════════ */
@@ -162,11 +148,9 @@
             transition: all 0.4s var(--ease-out-expo);
         }
 
-        @media (hover: hover) {
-            .logo:hover .logo-symbol {
-                filter: drop-shadow(0 0 20px rgba(240, 192, 90, 0.6));
-                transform: scale(1.05);
-            }
+        .logo:hover .logo-symbol {
+            filter: drop-shadow(0 0 20px rgba(240, 192, 90, 0.6));
+            transform: scale(1.05);
         }
 
         .logo-text {
@@ -206,14 +190,8 @@
             transition: width 0.4s var(--ease-out-expo);
         }
 
-        @media (hover: hover) {
-            .nav-links a:hover { color: var(--gold-light); }
-            .nav-links a:hover::after { width: 100%; }
-        }
-
-        .nav-links a:active {
-            color: var(--gold-light);
-        }
+        .nav-links a:hover { color: var(--gold-light); }
+        .nav-links a:hover::after { width: 100%; }
 
         .nav-cta {
             padding: 0.85rem 2rem;
@@ -225,75 +203,96 @@
             font-weight: 500;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.4s var(--ease-out-expo);
             text-decoration: none;
         }
 
-        @media (hover: hover) {
-            .nav-cta:hover {
-                background: var(--gold);
-                color: var(--void);
-                box-shadow: 0 0 40px rgba(240, 192, 90, 0.3);
-            }
+        .nav-cta:hover {
+            background: var(--gold);
+            color: var(--void);
+            box-shadow: 0 0 40px rgba(240, 192, 90, 0.3);
         }
 
-        .nav-cta:active {
-            transform: scale(0.98);
-            transition: transform 0.1s;
-        }
         .mobile-toggle {
             display: none;
             flex-direction: column;
             gap: 6px;
             cursor: pointer;
             padding: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .mobile-toggle { display: flex; }
+            background: transparent;
+            border: none;
+            z-index: 1001;
+            position: relative;
         }
 
         .mobile-toggle span {
             width: 28px;
             height: 2px;
             background: var(--gold-light);
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: center;
+            display: block;
         }
 
         .mobile-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 6px);
+            transform: rotate(45deg) translate(10px, 10px);
         }
 
         .mobile-toggle.active span:nth-child(2) {
             opacity: 0;
+            transform: translateX(-10px);
         }
 
         .mobile-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -6px);
+            transform: rotate(-45deg) translate(7px, -7px);
         }
         
         @media (max-width: 992px) {
-            .nav-links {
-                position: fixed;
-                top: 80px;
-                left: 0;
-                right: 0;
-                background: rgba(10, 10, 10, 0.98);
-                backdrop-filter: blur(20px);
+            /* 1. Stack the navigation vertically to fit all content */
+            .nav-container {
                 flex-direction: column;
-                padding: 2rem;
+                height: auto;
+                padding: 1.5rem 1rem;
                 gap: 1.5rem;
-                transform: translateX(-100%);
-                transition: transform 0.3s ease;
-                display: flex;
             }
-            
-            .nav-links.active {
-                transform: translateX(0);
+
+            /* 2. Organize links into a centered wrapping grid */
+            .nav-links {
+                display: flex !important;
+                flex-wrap: wrap; /* This allows links to move to a second row if needed */
+                justify-content: center;
+                gap: 1rem 1.5rem; /* Vertical and horizontal spacing */
+                width: 100%;
+                position: static !important;
+                transform: none !important;
+                background: transparent !important;
             }
-            
-            .mobile-toggle { display: flex; }
+
+            .nav-links li {
+                list-style: none;
+            }
+
+            .nav-links a {
+                font-size: 0.75rem !important; /* Slightly smaller to ensure fit */
+                letter-spacing: 0.1em;
+                color: var(--silver);
+            }
+
+            /* 3. Center the 'Get Started' button below the links */
+            .nav-cta {
+                margin: 0 auto;
+                width: 100%;
+                max-width: 200px;
+                text-align: center;
+                padding: 0.7rem 1rem;
+                font-size: 0.8rem;
+            }
+
+            /* 4. Hide the toggle since we are using direct links */
+            .mobile-toggle {
+                display: none !important;
+            }
         }
 
         /* ═══════════════════════════════════════
@@ -305,9 +304,22 @@
             align-items: center;
             justify-content: center;
             position: relative;
-            width: 100%;
             overflow: hidden;
-            padding: 0 2rem;
+            padding: 6rem 2rem 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                min-height: 85vh;
+                padding: 5rem 1.5rem 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                min-height: 80vh;
+                padding: 4rem 1rem 2rem;
+            }
         }
 
         /* Animated Background */
@@ -338,6 +350,12 @@
             height: 100%;
             pointer-events: none;
             overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .hero-shapes {
+                display: none;
+            }
         }
 
         .shape {
@@ -399,6 +417,19 @@
             pointer-events: none;
         }
 
+        @media (max-width: 768px) {
+            .hero-rings {
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(0.6);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-rings {
+                display: none;
+            }
+        }
+
         .ring {
             position: absolute;
             border: 1px solid rgba(240, 192, 90, 0.1);
@@ -439,26 +470,52 @@
             z-index: 2;
             max-width: 950px;
             text-align: center;
-            padding: 2rem;
+            padding: 2rem 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                padding: 1.5rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content {
+                padding: 1rem 0;
+            }
         }
 
         .hero-tagline {
             font-family: var(--font-body);
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 400;
             color: var(--gold);
-            letter-spacing: 0.4em;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             opacity: 1;
+        }
+
+        @media (max-width: 480px) {
+            .hero-tagline {
+                font-size: 0.8rem;
+                margin-bottom: 1rem;
+            }
         }
 
         .hero-title {
             font-family: var(--font-display);
-            font-size: clamp(2rem, 8vw, 5rem);
+            font-size: clamp(2rem, 7vw, 5rem);
             font-weight: 400;
-            line-height: 1.1;
-            margin-bottom: 2rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: clamp(1.5rem, 6vw, 2.5rem);
+                margin-bottom: 1rem;
+            }
         }
 
         .hero-title .line {
@@ -481,12 +538,20 @@
         }
 
         .hero-subtitle {
-            font-size: clamp(1rem, 4vw, 1.4rem);
+            font-size: clamp(0.95rem, 3.5vw, 1.3rem);
             font-weight: 300;
             color: var(--silver);
             max-width: 600px;
-            margin: 0 auto 3rem;
+            margin: 0 auto 2rem;
             opacity: 1;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 480px) {
+            .hero-subtitle {
+                font-size: 0.95rem;
+                margin: 0 auto 1.5rem;
+            }
         }
 
         .hero-cta-group {
@@ -495,6 +560,19 @@
             justify-content: center;
             flex-wrap: wrap;
             opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .hero-cta-group {
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-cta-group {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
         }
 
         .btn-primary {
@@ -507,11 +585,21 @@
             font-weight: 600;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.4s var(--ease-out-expo);
             text-decoration: none;
             position: relative;
             overflow: hidden;
+            display: inline-block;
+        }
+
+        @media (max-width: 480px) {
+            .btn-primary {
+                padding: 0.95rem 2rem;
+                font-size: 0.85rem;
+                width: 100%;
+                text-align: center;
+            }
         }
 
         .btn-primary::before {
@@ -525,19 +613,12 @@
             transition: left 0.5s ease;
         }
 
-        @media (hover: hover) {
-            .btn-primary:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 20px 50px rgba(240, 192, 90, 0.5);
-            }
-
-            .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(240, 192, 90, 0.5);
         }
 
-        .btn-primary:active {
-            transform: scale(0.98);
-            transition: transform 0.1s;
-        }
+        .btn-primary:hover::before { left: 100%; }
 
         .btn-secondary {
             padding: 1.15rem 2.5rem;
@@ -549,22 +630,25 @@
             font-weight: 500;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            cursor: none;
+            cursor: pointer;
             transition: all 0.4s var(--ease-out-expo);
             text-decoration: none;
+            display: inline-block;
         }
 
-        @media (hover: hover) {
-            .btn-secondary:hover {
-                border-color: var(--gold);
-                color: var(--gold-light);
-                background: rgba(240, 192, 90, 0.1);
+        @media (max-width: 480px) {
+            .btn-secondary {
+                padding: 0.95rem 2rem;
+                font-size: 0.85rem;
+                width: 100%;
+                text-align: center;
             }
         }
 
-        .btn-secondary:active {
-            transform: scale(0.98);
-            transition: transform 0.1s;
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold-light);
+            background: rgba(240, 192, 90, 0.1);
         }
 
         .hero-scroll {
@@ -700,14 +784,8 @@
             transition: transform 0.3s var(--ease-out-expo);
         }
 
-        @media (hover: hover) {
-            .stat-item:hover {
-                transform: translateY(-5px);
-            }
-        }
-
-        .stat-item:active {
-            transform: scale(0.98);
+        .stat-item:hover {
+            transform: translateY(-5px);
         }
 
         .stat-number {
@@ -844,15 +922,9 @@
             transition: all 0.4s var(--ease-out-expo);
         }
 
-        @media (hover: hover) {
-            .purpose-section:hover {
-                border-color: var(--gold);
-                transform: translateY(-5px);
-            }
-        }
-
-        .purpose-section:active {
-            transform: scale(0.98);
+        .purpose-section:hover {
+            border-color: var(--gold);
+            transform: translateY(-5px);
         }
 
         .purpose-icon {
@@ -992,23 +1064,16 @@
             pointer-events: none;
         }
 
-        @media (hover: hover) {
-            .service-card:hover {
-                background: var(--slate);
-                transform: translateY(-15px) rotateX(5deg) rotateY(-2deg);
-                box-shadow: 
-                    0 30px 60px rgba(0, 0, 0, 0.5),
-                    0 0 60px rgba(240, 192, 90, 0.1);
-            }
-
-            .service-card:hover::before { transform: scaleX(1); }
-            .service-card:hover::after { opacity: 1; }
+        .service-card:hover {
+            background: var(--slate);
+            transform: translateY(-15px) rotateX(5deg) rotateY(-2deg);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.5),
+                0 0 60px rgba(240, 192, 90, 0.1);
         }
 
-        .service-card:active {
-            transform: scale(0.98);
-            transition: transform 0.1s;
-        }
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-card:hover::after { opacity: 1; }
 
         .service-icon {
             width: 70px;
@@ -1022,12 +1087,10 @@
             transition: all 0.4s var(--ease-out-expo);
         }
 
-        @media (hover: hover) {
-            .service-card:hover .service-icon {
-                transform: scale(1.1) rotate(5deg);
-                background: rgba(240, 192, 90, 0.2);
-                box-shadow: 0 0 40px rgba(240, 192, 90, 0.3);
-            }
+        .service-card:hover .service-icon {
+            transform: scale(1.1) rotate(5deg);
+            background: rgba(240, 192, 90, 0.2);
+            box-shadow: 0 0 40px rgba(240, 192, 90, 0.3);
         }
 
         .service-icon svg {
@@ -3713,8 +3776,7 @@
         const cursor = document.querySelector('.cursor');
         const cursorDot = document.querySelector('.cursor-dot');
         
-        // Only run cursor logic if the device has a mouse (fine pointer)
-        if (window.matchMedia("(pointer: fine)").matches && cursor && cursorDot) {
+        if (cursor && cursorDot) {
             let mouseX = 0;
             let mouseY = 0;
             
@@ -3794,8 +3856,10 @@
         const mobileToggle = document.querySelector('.mobile-toggle');
         const navLinks = document.querySelector('.nav-links');
 
-        if (mobileToggle) {
-            mobileToggle.addEventListener('click', () => {
+        if (mobileToggle && navLinks) {
+            // Toggle menu on hamburger click
+            mobileToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
                 navLinks.classList.toggle('active');
                 mobileToggle.classList.toggle('active');
             });
@@ -3806,6 +3870,22 @@
                     navLinks.classList.remove('active');
                     mobileToggle.classList.remove('active');
                 });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    mobileToggle.classList.remove('active');
+                }
+            });
+
+            // Close menu on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+                    navLinks.classList.remove('active');
+                    mobileToggle.classList.remove('active');
+                }
             });
         }
 
@@ -3827,7 +3907,7 @@
                 
                 card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
             });
-        }
+        });
     </script>
 </body>
 </html>
