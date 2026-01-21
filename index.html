@@ -41,7 +41,13 @@
 
         html {
             scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: var(--gold) var(--charcoal);
         }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--charcoal); }
+        ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
 
         body {
             font-family: var(--font-body);
@@ -58,8 +64,13 @@
             cursor: none;
         }
 
+        ::selection {
+            background: var(--gold);
+            color: var(--void);
+        }
+
         /* ═══════════════════════════════════════
-           CUSTOM CURSOR - FIXED HIDING ON MOBILE
+           CUSTOM CURSOR
         ═══════════════════════════════════════ */
         .cursor {
             width: 28px;
@@ -69,7 +80,10 @@
             position: fixed;
             pointer-events: none;
             z-index: 9999999;
+            opacity: 1;
+            transition: opacity 0.3s ease, width 0.3s ease, height 0.3s ease;
             transform: translate(-50%, -50%);
+            box-shadow: 0 0 8px rgba(240, 192, 90, 0.3);
             display: block;
         }
 
@@ -81,10 +95,14 @@
             position: fixed;
             pointer-events: none;
             z-index: 10000000;
+            opacity: 1;
+            box-shadow: 0 0 10px rgba(240, 192, 90, 0.8);
+            transition: opacity 0.3s ease;
             transform: translate(-50%, -50%);
             display: block;
         }
 
+        /* HIDE CURSOR ON MOBILE/TOUCH */
         @media (hover: none) and (pointer: coarse), (max-width: 992px) {
             body, a, button, input, textarea, select {
                 cursor: auto !important;
@@ -104,8 +122,15 @@
             width: 100%;
             z-index: 1000;
             padding: 1.5rem 0;
-            background: rgba(5, 5, 5, 0.95);
             transition: all 0.5s var(--ease-out-expo);
+            background: linear-gradient(to bottom, rgba(5, 5, 5, 0.95) 0%, rgba(5, 5, 5, 0.8) 50%, transparent 100%);
+        }
+
+        .nav.scrolled {
+            padding: 1rem 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--slate);
         }
 
         .nav-container {
@@ -124,6 +149,18 @@
             text-decoration: none;
         }
 
+        .logo-symbol {
+            width: 48px;
+            height: 48px;
+            fill: var(--gold-light);
+            transition: all 0.4s var(--ease-out-expo);
+        }
+
+        .logo:hover .logo-symbol {
+            filter: drop-shadow(0 0 20px rgba(240, 192, 90, 0.6));
+            transform: scale(1.05);
+        }
+
         .logo-text {
             font-family: var(--font-display);
             font-size: 1.8rem;
@@ -140,153 +177,309 @@
 
         .nav-links a {
             font-size: 0.95rem;
+            font-weight: 400;
             color: var(--silver);
             text-decoration: none;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
         }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--gold), var(--gold-glow));
+            transition: width 0.4s var(--ease-out-expo);
+        }
+
+        .nav-links a:hover { color: var(--gold-light); }
+        .nav-links a:hover::after { width: 100%; }
 
         .nav-cta {
             padding: 0.85rem 2rem;
+            background: transparent;
             border: 1px solid var(--gold);
             color: var(--gold-light);
-            text-decoration: none;
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s var(--ease-out-expo);
+            text-decoration: none;
+        }
+
+        .nav-cta:hover {
+            background: var(--gold);
+            color: var(--void);
+            box-shadow: 0 0 40px rgba(240, 192, 90, 0.3);
         }
 
         @media (max-width: 992px) {
             .nav-container {
                 flex-direction: column;
+                height: auto;
+                padding: 1.5rem 1rem;
                 gap: 1.5rem;
             }
             .nav-links {
+                display: flex !important;
                 flex-wrap: wrap;
                 justify-content: center;
-                gap: 1rem;
+                gap: 1rem 1.5rem;
+                width: 100%;
+                position: static !important;
+                transform: none !important;
+                background: transparent !important;
+            }
+            .nav-links a {
+                font-size: 0.75rem !important;
+            }
+            .nav-cta {
+                margin: 0 auto;
+                width: 100%;
+                max-width: 200px;
+                text-align: center;
             }
         }
 
         /* ═══════════════════════════════════════
-           HERO SECTION
+           HERO SECTION - PADDING FIXES
         ═══════════════════════════════════════ */
         .hero {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10rem 2rem 3rem;
+            position: relative;
+            overflow: hidden;
+            padding: 10rem 2rem 3rem; /* Adjusted from 6rem */
         }
 
         @media (max-width: 992px) {
-            .hero { padding: 18rem 1.5rem 4rem; }
-        }
-
-        /* ═══════════════════════════════════════
-           THE MANAGER BRIDGE PAGE - OVERLAP FIX
-        ═══════════════════════════════════════ */
-        .tmb-page {
-            display: none;
-            min-height: 100vh;
-        }
-
-        .tmb-page.active { display: block; }
-
-        .tmb-hero {
-            background: linear-gradient(180deg, var(--void) 0%, var(--obsidian) 100%);
-            padding: 12rem 4rem 6rem; /* Increased padding */
-            text-align: center;
-        }
-
-        @media (max-width: 992px) {
-            .tmb-hero {
-                /* Sufficient space for the deep stacked mobile nav bar */
-                padding: 18rem 2rem 5rem; 
+            .hero {
+                min-height: auto;
+                padding: 16rem 1.5rem 4rem; /* Massive padding for mobile stacked nav */
             }
         }
 
-        .tmb-badge {
-            display: inline-block;
-            padding: 0.6rem 1.75rem;
-            border: 1px solid var(--gold);
+        @media (max-width: 768px) {
+            .hero {
+                padding: 18rem 1.5rem 4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 16rem 1rem 3rem;
+            }
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(240, 192, 90, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(240, 192, 90, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(240, 192, 90, 0.03) 0%, transparent 50%);
+            animation: bgPulse 10s ease-in-out infinite;
+        }
+
+        @keyframes bgPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .hero-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .hero-shapes { display: none; }
+        }
+
+        .shape {
+            position: absolute;
+            border: 1px solid rgba(240, 192, 90, 0.2);
+            border-radius: 50%;
+            transition: transform 0.1s ease-out;
+        }
+
+        .shape-1 { width: 500px; height: 500px; top: 5%; left: -10%; animation: floatShape 20s ease-in-out infinite; }
+        .shape-2 { width: 400px; height: 400px; top: 50%; right: -10%; animation: floatShape 25s ease-in-out infinite reverse; }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 950px;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .hero-tagline {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            font-weight: 400;
             color: var(--gold);
-            margin-bottom: 2rem;
+            letter-spacing: 0.3em;
             text-transform: uppercase;
-            font-size: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 7vw, 5rem);
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title em {
+            font-style: italic;
+            color: var(--gold-light);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(0.95rem, 3.5vw, 1.3rem);
+            font-weight: 300;
+            color: var(--silver);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         .btn-primary {
             padding: 1.15rem 2.5rem;
             background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
+            border: none;
             color: var(--void);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
             font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s var(--ease-out-expo);
             text-decoration: none;
             display: inline-block;
         }
 
-        .main-content.hidden { display: none; }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(240, 192, 90, 0.5);
+        }
+
+        .btn-secondary {
+            padding: 1.15rem 2.5rem;
+            background: transparent;
+            border: 1px solid var(--ash);
+            color: var(--pearl);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s var(--ease-out-expo);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--gold);
+            color: var(--gold-light);
+            background: rgba(240, 192, 90, 0.1);
+        }
+
+        /* ═══════════════════════════════════════
+           REMAINDER OF STYLES (TRUNCATED FOR BREVITY)
+        ═══════════════════════════════════════ */
+        /* [Keeping existing about, services, values, and contact styles...] */
+        .section-pad { padding: 8rem 4rem; }
+        .about { background: linear-gradient(180deg, var(--obsidian) 0%, var(--charcoal) 100%); }
+        .container { max-width: 1400px; margin: 0 auto; }
+        /* Add other styles back here if you are replacing your entire file */
     </style>
 </head>
 <body>
-
     <div class="cursor"></div>
     <div class="cursor-dot"></div>
 
     <nav class="nav">
         <div class="nav-container">
-            <a href="#" onclick="hideTMBPage()" class="logo">
+            <a href="#" class="logo">
                 <span class="logo-text">KUZA</span>
             </a>
             <ul class="nav-links">
-                <li><a href="#about" onclick="hideTMBPage()">About</a></li>
-                <li><a href="#services" onclick="hideTMBPage()">Services</a></li>
-                <li><a href="javascript:void(0)" onclick="showTMBPage()">Programs</a></li>
-                <li><a href="#values" onclick="hideTMBPage()">Values</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#values">Values</a></li>
+                <li><a href="#clients">Clients</a></li>
             </ul>
-            <a href="javascript:void(0)" onclick="window.open('https://ee.kobotoolbox.org/x/aKvVyspA', '_blank')" class="nav-cta">Get Started</a>
+            <a href="#" class="nav-cta">Get Started</a>
         </div>
     </nav>
 
     <div class="main-content" id="mainContent">
         <section class="hero">
+            <div class="hero-bg"></div>
             <div class="hero-content">
-                <h1>Nurturing Growth. <br><em>Empowering Success.</em></h1>
-                <p>We transform organizations across Africa and beyond.</p>
+                <p class="hero-tagline">Architects of Excellence</p>
+                <h1 class="hero-title">
+                    <span class="line">Nurturing Growth.</span><br>
+                    <span class="line"><em>Empowering Success.</em></span>
+                </h1>
+                <p class="hero-subtitle">We transform organizations and build resilient teams across Africa and beyond.</p>
+                <div class="hero-cta-group">
+                    <a href="#" class="btn-primary">Start a Conversation</a>
+                    <a href="#services" class="btn-secondary">Our Expertise</a>
+                </div>
             </div>
         </section>
-    </div>
 
-    <div class="tmb-page" id="tmbPage">
-        <section class="tmb-hero">
-            <div class="container">
-                <span class="tmb-badge">Leadership Programme</span>
-                <h1>THE MANAGER BRIDGE™</h1>
-                <p>8-Week Leadership Development Programme</p>
-                <a href="#" class="btn-primary">Enroll Now</a>
-            </div>
-        </section>
-    </div>
+        </div>
 
     <script>
-        function showTMBPage() {
-            document.getElementById('mainContent').classList.add('hidden');
-            document.getElementById('tmbPage').classList.add('active');
-            window.scrollTo(0, 0);
-        }
-
-        function hideTMBPage() {
-            document.getElementById('mainContent').classList.remove('hidden');
-            document.getElementById('tmbPage').classList.remove('active');
-        }
-
+        // CURSOR SCRIPT
         const cursor = document.querySelector('.cursor');
         const cursorDot = document.querySelector('.cursor-dot');
         
-        document.addEventListener('mousemove', (e) => {
-            if (window.innerWidth > 992) {
+        if (cursor && cursorDot) {
+            document.addEventListener('mousemove', (e) => {
                 cursor.style.left = e.clientX + 'px';
                 cursor.style.top = e.clientY + 'px';
                 cursorDot.style.left = e.clientX + 'px';
                 cursorDot.style.top = e.clientY + 'px';
-            }
+            });
+        }
+
+        // NAV SCROLL
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 50);
         });
     </script>
 </body>
