@@ -111,9 +111,6 @@
                 display: none !important;
             }
         }
-        }
-
-
 
         /* ═══════════════════════════════════════
            NAVIGATION
@@ -249,7 +246,6 @@
 
         @media (max-width: 768px) {
             .mobile-toggle { display: flex; }
-        }
         }
 
         .mobile-toggle span {
@@ -468,9 +464,6 @@
             display: block;
             opacity: 1;
         }
-
-        .hero-title .line:nth-child(1) span { }
-        .hero-title .line:nth-child(2) span { }
 
         @keyframes slideUp {
             to { opacity: 1; transform: translateY(0); }
@@ -3826,6 +3819,9 @@
                 const rotateX = (y - centerY) / 15;
                 const rotateY = (centerX - x) / 15;
                 
-                card.style.transform = `translateY(-15px) rotateX(${rotateX}deg)
-kuza.html
-Displaying kuza.html.
+                card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+            });
+        }
+    </script>
+</body>
+</html>
