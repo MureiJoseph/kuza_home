@@ -57,11 +57,18 @@
             font-weight: 300;
             font-size: 18px;
             overflow-x: hidden;
-            cursor: none;
+            -webkit-tap-highlight-color: transparent;
         }
 
         a, button, input, textarea, select {
-            cursor: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Only hide the default cursor on devices that support the custom one */
+        @media (pointer: fine) {
+            body, a, button, input, textarea, select {
+                cursor: none;
+            }
         }
 
         ::selection {
@@ -152,9 +159,11 @@
             transition: all 0.4s var(--ease-out-expo);
         }
 
-        .logo:hover .logo-symbol {
-            filter: drop-shadow(0 0 20px rgba(240, 192, 90, 0.6));
-            transform: scale(1.05);
+        @media (hover: hover) {
+            .logo:hover .logo-symbol {
+                filter: drop-shadow(0 0 20px rgba(240, 192, 90, 0.6));
+                transform: scale(1.05);
+            }
         }
 
         .logo-text {
@@ -194,8 +203,14 @@
             transition: width 0.4s var(--ease-out-expo);
         }
 
-        .nav-links a:hover { color: var(--gold-light); }
-        .nav-links a:hover::after { width: 100%; }
+        @media (hover: hover) {
+            .nav-links a:hover { color: var(--gold-light); }
+            .nav-links a:hover::after { width: 100%; }
+        }
+
+        .nav-links a:active {
+            color: var(--gold-light);
+        }
 
         .nav-cta {
             padding: 0.85rem 2rem;
@@ -212,10 +227,17 @@
             text-decoration: none;
         }
 
-        .nav-cta:hover {
-            background: var(--gold);
-            color: var(--void);
-            box-shadow: 0 0 40px rgba(240, 192, 90, 0.3);
+        @media (hover: hover) {
+            .nav-cta:hover {
+                background: var(--gold);
+                color: var(--void);
+                box-shadow: 0 0 40px rgba(240, 192, 90, 0.3);
+            }
+        }
+
+        .nav-cta:active {
+            transform: scale(0.98);
+            transition: transform 0.1s;
         }
         .mobile-toggle {
             display: none;
@@ -235,6 +257,18 @@
             height: 2px;
             background: var(--gold-light);
             transition: all 0.3s ease;
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 6px);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -6px);
         }
         
         @media (max-width: 992px) {
@@ -269,6 +303,7 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            width: 100%;
             overflow: hidden;
             padding: 0 2rem;
         }
@@ -491,12 +526,19 @@
             transition: left 0.5s ease;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 20px 50px rgba(240, 192, 90, 0.5);
+        @media (hover: hover) {
+            .btn-primary:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 20px 50px rgba(240, 192, 90, 0.5);
+            }
+
+            .btn-primary:hover::before { left: 100%; }
         }
 
-        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:active {
+            transform: scale(0.98);
+            transition: transform 0.1s;
+        }
 
         .btn-secondary {
             padding: 1.15rem 2.5rem;
@@ -513,10 +555,17 @@
             text-decoration: none;
         }
 
-        .btn-secondary:hover {
-            border-color: var(--gold);
-            color: var(--gold-light);
-            background: rgba(240, 192, 90, 0.1);
+        @media (hover: hover) {
+            .btn-secondary:hover {
+                border-color: var(--gold);
+                color: var(--gold-light);
+                background: rgba(240, 192, 90, 0.1);
+            }
+        }
+
+        .btn-secondary:active {
+            transform: scale(0.98);
+            transition: transform 0.1s;
         }
 
         .hero-scroll {
@@ -652,8 +701,14 @@
             transition: transform 0.3s var(--ease-out-expo);
         }
 
-        .stat-item:hover {
-            transform: translateY(-5px);
+        @media (hover: hover) {
+            .stat-item:hover {
+                transform: translateY(-5px);
+            }
+        }
+
+        .stat-item:active {
+            transform: scale(0.98);
         }
 
         .stat-number {
@@ -790,9 +845,15 @@
             transition: all 0.4s var(--ease-out-expo);
         }
 
-        .purpose-section:hover {
-            border-color: var(--gold);
-            transform: translateY(-5px);
+        @media (hover: hover) {
+            .purpose-section:hover {
+                border-color: var(--gold);
+                transform: translateY(-5px);
+            }
+        }
+
+        .purpose-section:active {
+            transform: scale(0.98);
         }
 
         .purpose-icon {
@@ -932,16 +993,23 @@
             pointer-events: none;
         }
 
-        .service-card:hover {
-            background: var(--slate);
-            transform: translateY(-15px) rotateX(5deg) rotateY(-2deg);
-            box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.5),
-                0 0 60px rgba(240, 192, 90, 0.1);
+        @media (hover: hover) {
+            .service-card:hover {
+                background: var(--slate);
+                transform: translateY(-15px) rotateX(5deg) rotateY(-2deg);
+                box-shadow: 
+                    0 30px 60px rgba(0, 0, 0, 0.5),
+                    0 0 60px rgba(240, 192, 90, 0.1);
+            }
+
+            .service-card:hover::before { transform: scaleX(1); }
+            .service-card:hover::after { opacity: 1; }
         }
 
-        .service-card:hover::before { transform: scaleX(1); }
-        .service-card:hover::after { opacity: 1; }
+        .service-card:active {
+            transform: scale(0.98);
+            transition: transform 0.1s;
+        }
 
         .service-icon {
             width: 70px;
@@ -955,10 +1023,12 @@
             transition: all 0.4s var(--ease-out-expo);
         }
 
-        .service-card:hover .service-icon {
-            transform: scale(1.1) rotate(5deg);
-            background: rgba(240, 192, 90, 0.2);
-            box-shadow: 0 0 40px rgba(240, 192, 90, 0.3);
+        @media (hover: hover) {
+            .service-card:hover .service-icon {
+                transform: scale(1.1) rotate(5deg);
+                background: rgba(240, 192, 90, 0.2);
+                box-shadow: 0 0 40px rgba(240, 192, 90, 0.3);
+            }
         }
 
         .service-icon svg {
@@ -3644,7 +3714,8 @@
         const cursor = document.querySelector('.cursor');
         const cursorDot = document.querySelector('.cursor-dot');
         
-        if (cursor && cursorDot) {
+        // Only run cursor logic if the device has a mouse (fine pointer)
+        if (window.matchMedia("(pointer: fine)").matches && cursor && cursorDot) {
             let mouseX = 0;
             let mouseY = 0;
             
