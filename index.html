@@ -2972,6 +2972,115 @@
             .tmb-hero h1 { font-size: 1.6rem; letter-spacing: 0; }
             .tmb-back-btn { position: relative; top: auto; left: auto; margin: 1rem; }
         }
+        /* ═══════════════════════════════════════
+   IOS & MOBILE OPTIMIZATION
+═══════════════════════════════════════ */
+
+/* Hide custom cursor on iOS and touch devices */
+@media (hover: none) and (pointer: coarse) {
+    .cursor,
+    .cursor-dot {
+        display: none !important;
+        opacity: 0 !important;
+    }
+    
+    /* Reset body cursor to default on touch devices */
+    body, a, button, input, textarea, select {
+        cursor: auto !important;
+    }
+}
+
+/* Fix iOS Safari viewport height issues */
+@supports (-webkit-touch-callout: none) {
+    .hero {
+        min-height: -webkit-fill-available;
+    }
+    
+    body {
+        min-height: -webkit-fill-available;
+    }
+}
+
+/* Fix navigation overlap on mobile */
+@media (max-width: 992px) {
+    .nav-container {
+        position: relative;
+        z-index: 1001;
+    }
+    
+    .nav-cta {
+        position: relative;
+        z-index: 10;
+    }
+    
+    /* Add more padding to hero - increased from default */
+    .hero {
+        padding-top: 10rem !important;
+    }
+    
+    .hero-tagline {
+        margin-top: 2rem;
+    }
+}
+
+/* Fix WhatsApp button positioning on mobile */
+@media (max-width: 768px) {
+    .whatsapp-btn {
+        bottom: 5rem !important;
+        right: 1rem;
+        width: 50px;
+        height: 50px;
+        z-index: 8999;
+    }
+    
+    .whatsapp-btn svg {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+/* Fix client logo backgrounds */
+.client-testimonial-card .client-logo img {
+    background: transparent !important;
+    mix-blend-mode: screen;
+}
+
+/* Prevent iOS zoom on input focus */
+input, select, textarea {
+    font-size: 16px !important;
+}
+
+/* Fix iOS button appearance */
+button, .btn-primary, .btn-secondary, .nav-cta {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* Improve tap targets for iOS (minimum 44px) */
+@media (max-width: 768px) {
+    .nav-links a {
+        padding: 0.75rem 0.5rem;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .btn-primary, .btn-secondary {
+        min-height: 44px;
+    }
+}
+
+/* Fix iOS rubber-band scroll issues */
+html, body {
+    overscroll-behavior-y: none;
+}
+
+/* Improve iOS touch scrolling */
+.modal-container, .nav-links {
+    -webkit-overflow-scrolling: touch;
+}
     </style>
 </head>
 <body>
@@ -3917,4 +4026,3 @@
     </script>
 </body>
 </html>
-
