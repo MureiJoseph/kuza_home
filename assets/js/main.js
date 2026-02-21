@@ -185,14 +185,28 @@ cards.forEach(card => {
 });
 
 /* ═══════════════════════════════════════
-   ENROLLMENT MODAL LOGIC
+   ENROLLMENT MODAL LOGIC (FORMSUBMIT)
 ═══════════════════════════════════════ */
 const enrollmentModal = document.getElementById('enrollmentModal');
+const enrollmentForm = document.getElementById('enrollmentForm');
+const modalActionButtons = document.getElementById('modalActionButtons');
+const modalSuccessMessage = document.getElementById('modalSuccessMessage');
+
+// Set the hidden redirect URL to the current page so it doesn't leave the site on fallback
+const formRedirectUrl = document.getElementById('formRedirectUrl');
+if (formRedirectUrl) {
+    formRedirectUrl.value = window.location.href;
+}
 
 window.openEnrollmentModal = () => {
     if (enrollmentModal) {
         enrollmentModal.classList.add('active');
         document.body.style.overflow = 'hidden'; // Prevent scrolling
+
+        // Reset form state if reopened
+        if (enrollmentForm) enrollmentForm.reset();
+        if (modalActionButtons) modalActionButtons.style.display = 'flex';
+        if (modalSuccessMessage) modalSuccessMessage.style.display = 'none';
     }
 };
 
@@ -203,24 +217,47 @@ window.closeEnrollmentModal = () => {
     }
 };
 
-window.confirmEnrollment = () => {
-    // 1. Close the modal
-    closeEnrollmentModal();
+// Handle FormSubmit via AJAX to prevent page reload
+if (enrollmentForm) {
+    enrollmentForm.addEventListener('submit', function (e) {
+        e.preventDefault(); // Stop default form submission
 
-    // 2. Draft the mailto content
-    const emailTo = "kuza@kuzapartners.com";
-    const subject = encodeURIComponent("New Program Enrollment Request");
-    const bodyText = encodeURIComponent(
-        "Hello KUZA Partners,\n\n" +
-        "I have read and agreed to the enrollment policies.\n\n" +
-        "I would like to confirm my registration for the leadership program. Please let me know the next steps.\n\n" +
-        "Kind regards,\n" +
-        "[Your Name Here]"
-    );
+        // Change button to loading state
+        const submitBtn = enrollmentForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.innerText;
+        submitBtn.innerText = 'Sending...';
+        submitBtn.disabled = true;
 
-    // 3. Trigger email client
-    window.location.href = `mailto:${emailTo}?subject=${subject}&body=${bodyText}`;
-};
+        const formData = new FormData(enrollmentForm);
+
+        fetch(enrollmentForm.action, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+            .then(response => {
+                if (response.ok) {
+                    // Hide inputs/buttons, show success message
+                    if (modalActionButtons) modalActionButtons.style.display = 'none';
+                    if (modalSuccessMessage) modalSuccessMessage.style.display = 'block';
+
+                    // Close modal automatically after 4 seconds
+                    setTimeout(() => {
+                        closeEnrollmentModal();
+                    }, 4000);
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                submitBtn.innerText = 'Error. Try Again.';
+                submitBtn.disabled = false;
+            });
+    });
+}
 
 // Close modal if user clicks outside of the content box
 if (enrollmentModal) {

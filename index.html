@@ -728,58 +728,6 @@
             </div>
         </section>
 
-        <!-- TMB Curriculum -->
-        <section class="tmb-curriculum">
-            <div class="container">
-                <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
-                    <p class="section-label">The Journey</p>
-                    <h2 class="section-title">8-Week <em>Curriculum</em></h2>
-                </div>
-                <div class="tmb-weeks-grid">
-                    <div class="tmb-week-card">
-                        <p class="week-number">Week 1</p>
-                        <h4>The Crossing</h4>
-                        <span class="tmb-direction-tag foundation">Foundation</span>
-                    </div>
-                    <div class="tmb-week-card">
-                        <p class="week-number">Week 2</p>
-                        <h4>Building Trust</h4>
-                        <span class="tmb-direction-tag down">DOWN</span>
-                    </div>
-                    <div class="tmb-week-card">
-                        <p class="week-number">Week 3</p>
-                        <h4>Delegation & Feedback</h4>
-                        <span class="tmb-direction-tag down">DOWN</span>
-                    </div>
-                    <div class="tmb-week-card">
-                        <p class="week-number">Week 4</p>
-                        <h4>Managing Your Manager</h4>
-                        <span class="tmb-direction-tag up">UP</span>
-                    </div>
-                    <div class="tmb-week-card">
-                        <p class="week-number">Week 5</p>
-                        <h4>Influence Without Authority</h4>
-                        <span class="tmb-direction-tag across">ACROSS</span>
-                    </div>
-                    <div class="tmb-week-card">
-                        <p class="week-number">Week 6</p>
-                        <h4>Decisions & Meetings</h4>
-                        <span class="tmb-direction-tag across">ACROSS</span>
-                    </div>
-                    <div class="tmb-week-card">
-                        <p class="week-number">Week 7</p>
-                        <h4>Sustaining Success</h4>
-                        <span class="tmb-direction-tag foundation">Integration</span>
-                    </div>
-                    <div class="tmb-week-card">
-                        <p class="week-number">Week 8</p>
-                        <h4>Your Leadership Identity</h4>
-                        <span class="tmb-direction-tag foundation">Integration</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
         <!-- TMB Benefits -->
         <section class="tmb-benefits">
             <div class="container">
@@ -974,9 +922,28 @@
         </div>
     </footer>
 
-    <!-- Enrollment Policy Modal -->
+    <!-- Enrollment Policy Modal (Autoresponder Form) -->
     <div id="enrollmentModal" class="modal-overlay">
-        <div class="modal-content">
+        <!-- Target FormSubmit to kuza@kuzapartners.com -->
+        <form class="modal-content" action="https://formsubmit.co/kuza@kuzapartners.com" method="POST"
+            id="enrollmentForm">
+            <!-- FormSubmit Configurations -->
+            <input type="hidden" name="_subject" value="New TMB Enrollment Request!">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+
+            <!-- Automated Response to the Lead -->
+            <input type="hidden" name="_autoresponse"
+                value="Thank you for confirming your enrollment in The MANAGER Bridge (TMB) program! 
+
+As promised, here is the official Programme Overview and Scope of the 8-week journey:
+https://drive.google.com/file/d/1-7dYicEJU9zq7j6SELJdO24-9Sl3yqBa/view
+
+A member of the KUZA Partners team will be in touch with you shortly regarding the next steps and invoicing. We look forward to seeing you cross the bridge!">
+
+            <!-- Disable default redirect, handled in JS -->
+            <input type="hidden" name="_next" id="formRedirectUrl" value="">
+
             <h2 class="modal-title">Enrollment Policies & Terms</h2>
             <div class="modal-body">
                 <p>Welcome to KUZA Partners! Before enrolling, please review our terms:</p>
@@ -990,14 +957,28 @@
                     <li><strong>Confidentiality:</strong> Any materials provided during our programs are strictly for
                         your personal or organizational use.</li>
                 </ul>
-                <p>By clicking "Confirm Enrollment", you agree to these terms. An email draft will open for you to
-                    finalize and send your request.</p>
+                <p>Please enter your email below to agree to these terms. You will immediately receive the
+                    <strong>Program Scope & Overview Document</strong> in your inbox.</p>
+
+                <div class="form-group" style="margin-top: 1.5rem;">
+                    <label for="leadEmail"
+                        style="display:block; color:var(--pearl); margin-bottom:0.5rem; font-family:var(--font-display);">Your
+                        Email Address *</label>
+                    <input type="email" id="leadEmail" name="email" required placeholder="manager@company.com"
+                        style="width: 100%; padding: 0.8rem; background: var(--obsidian); border: 1px solid var(--slate); color: var(--ivory); border-radius: 4px; font-family: var(--font-body);">
+                </div>
             </div>
-            <div class="modal-actions">
-                <button onclick="closeEnrollmentModal()" class="btn-secondary">Cancel</button>
-                <button onclick="confirmEnrollment()" class="btn-primary">Confirm Enrollment</button>
+
+            <div class="modal-actions" id="modalActionButtons">
+                <button type="button" onclick="closeEnrollmentModal()" class="btn-secondary">Cancel</button>
+                <button type="submit" class="btn-primary">Confirm & Receive Document</button>
             </div>
-        </div>
+
+            <div id="modalSuccessMessage"
+                style="display: none; text-align: center; color: var(--gold-light); font-weight: bold; margin-top: 1rem;">
+                Success! Check your inbox for the program details.
+            </div>
+        </form>
     </div>
 
     <!-- Floating WhatsApp Button -->
