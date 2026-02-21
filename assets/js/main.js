@@ -183,3 +183,50 @@ cards.forEach(card => {
         card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     });
 });
+
+/* ═══════════════════════════════════════
+   ENROLLMENT MODAL LOGIC
+═══════════════════════════════════════ */
+const enrollmentModal = document.getElementById('enrollmentModal');
+
+window.openEnrollmentModal = () => {
+    if (enrollmentModal) {
+        enrollmentModal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+};
+
+window.closeEnrollmentModal = () => {
+    if (enrollmentModal) {
+        enrollmentModal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+};
+
+window.confirmEnrollment = () => {
+    // 1. Close the modal
+    closeEnrollmentModal();
+    
+    // 2. Draft the mailto content
+    const emailTo = "kuza@kuzapartners.com";
+    const subject = encodeURIComponent("New Program Enrollment Request");
+    const bodyText = encodeURIComponent(
+        "Hello KUZA Partners,\n\n" +
+        "I have read and agreed to the enrollment policies.\n\n" +
+        "I would like to confirm my registration for the leadership program. Please let me know the next steps.\n\n" +
+        "Kind regards,\n" +
+        "[Your Name Here]"
+    );
+    
+    // 3. Trigger email client
+    window.location.href = `mailto:${emailTo}?subject=${subject}&body=${bodyText}`;
+};
+
+// Close modal if user clicks outside of the content box
+if (enrollmentModal) {
+    enrollmentModal.addEventListener('click', (e) => {
+        if (e.target === enrollmentModal) {
+            closeEnrollmentModal();
+        }
+    });
+}

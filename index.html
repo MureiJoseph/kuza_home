@@ -569,9 +569,7 @@
                 <p class="tmb-subtitle">8-Week Leadership Development Programme</p>
                 <p class="tmb-tagline">Transform new managers into confident leaders using <span>3-Directional
                         Leadership™</span></p>
-                <a href="javascript:void(0)"
-                    onclick="window.open('https://kuzaleadership.freshlearn.com/checkout/Course/38544', '_blank')"
-                    class="btn-primary">Enroll Now</a>
+                <a href="javascript:void(0)" onclick="openEnrollmentModal()" class="btn-primary">Enroll Now</a>
             </div>
         </section>
 
@@ -832,9 +830,7 @@
                             <li>Complete independently</li>
                             <li>2-3 hours per week</li>
                         </ul>
-                        <a href="javascript:void(0)"
-                            onclick="window.open('https://kuzaleadership.freshlearn.com/checkout/Course/38544', '_blank')"
-                            class="btn-primary">Enroll Now</a>
+                        <a href="javascript:void(0)" onclick="openEnrollmentModal()" class="btn-primary">Enroll Now</a>
                     </div>
                     <div class="tmb-pricing-card featured">
                         <h3>Cohort-Based</h3>
@@ -871,9 +867,7 @@
             <div class="container">
                 <h2>Ready to Transform Your Managers into <em>Leaders?</em></h2>
                 <p>Join hundreds of organisations who have already made the crossing.</p>
-                <a href="javascript:void(0)"
-                    onclick="window.open('https://kuzaleadership.freshlearn.com/checkout/Course/38544', '_blank')"
-                    class="btn-primary">Enroll Now</a>
+                <a href="javascript:void(0)" onclick="openEnrollmentModal()" class="btn-primary">Enroll Now</a>
             </div>
         </section>
     </div><!-- End TMB Page -->
@@ -892,6 +886,32 @@
             <p class="footer-copyright">© 2025 KUZA Partners. All Rights Reserved.</p>
         </div>
     </footer>
+
+    <!-- Enrollment Policy Modal -->
+    <div id="enrollmentModal" class="modal-overlay">
+        <div class="modal-content">
+            <h2 class="modal-title">Enrollment Policies & Terms</h2>
+            <div class="modal-body">
+                <p>Welcome to KUZA Partners! Before enrolling, please review our terms:</p>
+                <ul>
+                    <li><strong>Commitment:</strong> All programs require a dedicated time commitment to ensure the
+                        highest quality of development.</li>
+                    <li><strong>Payment:</strong> Invoices will be issued upon confirmation. Full payment is required
+                        prior to the commencement of the program.</li>
+                    <li><strong>Cancellations:</strong> Cancellations must be made at least 14 days in advance for a
+                        full refund.</li>
+                    <li><strong>Confidentiality:</strong> Any materials provided during our programs are strictly for
+                        your personal or organizational use.</li>
+                </ul>
+                <p>By clicking "Confirm Enrollment", you agree to these terms. An email draft will open for you to
+                    finalize and send your request.</p>
+            </div>
+            <div class="modal-actions">
+                <button onclick="closeEnrollmentModal()" class="btn-secondary">Cancel</button>
+                <button onclick="confirmEnrollment()" class="btn-primary">Confirm Enrollment</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Floating WhatsApp Button -->
     <a href="javascript:void(0)" onclick="window.open('https://wa.me/254727576677', '_blank')" class="whatsapp-btn">
