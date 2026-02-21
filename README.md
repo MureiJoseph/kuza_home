@@ -1,30 +1,30 @@
-# KUZA Partners - Organizational Excellence
+# KUZA Partners Landing Page
 
-The official landing page for KUZA Partners, architects of organizational excellence across Africa.
+Welcome to the source code for the [KUZA Partners](https://kuzapartners.com/) official website. We are architects of organizational excellence, dedicated to empowering growth across Africa and beyond.
 
-## Project Structure
+## 🚀 Project Overview
 
-This project has been streamlined for maximum performance and simplicity. It is now a single-page architecture designed to be served directly via GitHub Pages.
+This repository contains the front-end code for our landing page. We designed this to be a highly-performant, single-page application built on pure HTML, CSS, and modern JavaScript, allowing for incredibly fast load times and a premium user experience without the overhead of heavy frameworks.
 
-```text
-kuza_home/
-├── .agent/                # AI Agent Context Instructions
-├── index.html             # Main Entry Point (Contains all HTML/CSS/JS)
-└── README.md              # Project Documentation
+### Structure
+
+The structure of this project is clean and intuitive:
+
+```
+├── assets/
+│   ├── css/          # Core styling, variables, and animations
+│   ├── js/           # Interactive logic and custom features
+│   └── images/       # Static assets 
+├── index.html        # The main entry document
+└── README.md         # You are here!
 ```
 
-## Getting Started
+## 💻 Making Changes
 
-### Prerequisites
-None. 
+If you need to make updates to the layout or styling, start looking in `assets/css/style.css`.
+For interactive behaviors (such as the custom cursor or the navigation menu), check out `assets/js/main.js`.
 
-### Running the Project
-Since the entire application is contained within a single file, you simply need to open it in a web browser.
+To preview changes locally, simply open the `index.html` file in any modern web browser.
 
-1. Clone the repository or download the files.
-2. Double-click on `index.html` to open it in your default web browser.
-
-Alternatively, the live site is automatically deployed via GitHub Pages from the `main` branch.
-
-## License
+## 📄 License
 © 2026 KUZA Partners. All rights reserved.
