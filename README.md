@@ -1,52 +1,30 @@
 # KUZA Partners - Organizational Excellence
 
-A modular web application for KUZA Partners, architects of organizational excellence across Africa.
+The official landing page for KUZA Partners, architects of organizational excellence across Africa.
 
 ## Project Structure
+
+This project has been streamlined for maximum performance and simplicity. It is now a single-page architecture designed to be served directly via GitHub Pages.
 
 ```text
 kuza_home/
 ├── .agent/                # AI Agent Context Instructions
-├── assets/                # Global static assets (Images, Fonts)
-├── frontend/              # Frontend Application
-│   ├── css/               # Stylesheets
-│   ├── js/                # Client-side Logic (app.js)
-│   └── index.html         # Main Entry Point
-└── backend/               # Backend API (Node.js/Express)
-    ├── src/               # Source Code
-    │   ├── routes/        # API Routes
-    │   ├── controllers/   # Route Handlers
-    │   └── server.js      # Server Configuration
-    └── package.json       # Backend Dependencies
+├── index.html             # Main Entry Point (Contains all HTML/CSS/JS)
+└── README.md              # Project Documentation
 ```
 
 ## Getting Started
 
 ### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
-
-### Installation
-1.  Navigate to the backend directory:
-    ```bash
-    cd backend
-    ```
-2.  Install dependencies:
-    ```bash
-    npm install
-    ```
+None. 
 
 ### Running the Project
-1.  Start the backend server:
-    ```bash
-    npm start
-    ```
-2.  Open `frontend/index.html` in your browser to view the site.
+Since the entire application is contained within a single file, you simply need to open it in a web browser.
 
-## Development Roles
-This project is designed to be maintained by specialized AI agents:
-- **Frontend Agent**: Rules defined in `.agent/frontend_agent.md`
-- **Backend Agent**: Rules defined in `.agent/backend_agent.md`
+1. Clone the repository or download the files.
+2. Double-click on `index.html` to open it in your default web browser.
+
+Alternatively, the live site is automatically deployed via GitHub Pages from the `main` branch.
 
 ## License
 © 2026 KUZA Partners. All rights reserved.
