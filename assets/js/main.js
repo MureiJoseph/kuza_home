@@ -267,29 +267,3 @@ if (enrollmentModal) {
         }
     });
 }
-
-// ═══════════════════════════════════════
-// TIMELINE SCROLL ANIMATION
-// ═══════════════════════════════════════
-const timelineItems = document.querySelectorAll('.timeline-item');
-
-if (timelineItems.length > 0) {
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.2
-    };
-
-    const timelineObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    timelineItems.forEach(item => {
-        timelineObserver.observe(item);
-    });
-}
