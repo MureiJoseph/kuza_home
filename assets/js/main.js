@@ -192,10 +192,11 @@ const enrollmentForm = document.getElementById('enrollmentForm');
 const modalActionButtons = document.getElementById('modalActionButtons');
 const modalSuccessMessage = document.getElementById('modalSuccessMessage');
 
-// Set the hidden redirect URL to the current page so it doesn't leave the site on fallback
+// Set the hidden redirect URL to the checkout page
 const formRedirectUrl = document.getElementById('formRedirectUrl');
 if (formRedirectUrl) {
-    formRedirectUrl.value = window.location.href;
+    // Placeholder checkout URL - Replace with actual Stripe/payment link
+    formRedirectUrl.value = 'https://kuzapartners.com/tmb-checkout-placeholder';
 }
 
 window.openEnrollmentModal = () => {
@@ -239,14 +240,20 @@ if (enrollmentForm) {
         })
             .then(response => {
                 if (response.ok) {
-                    // Hide inputs/buttons, show success message
-                    if (modalActionButtons) modalActionButtons.style.display = 'none';
-                    if (modalSuccessMessage) modalSuccessMessage.style.display = 'block';
+                    // Redirect immediately to checkout on success
+                    submitBtn.innerText = 'Redirecting to Checkout...';
 
-                    // Close modal automatically after 4 seconds
-                    setTimeout(() => {
-                        closeEnrollmentModal();
-                    }, 4000);
+                    // Fetch the _next redirect URL from the hidden input
+                    const redirectUrl = document.getElementById('formRedirectUrl').value;
+
+                    if (redirectUrl) {
+                        window.location.href = redirectUrl;
+                    } else {
+                        // Fallback if no redirect is set
+                        if (modalActionButtons) modalActionButtons.style.display = 'none';
+                        if (modalSuccessMessage) modalSuccessMessage.style.display = 'block';
+                        setTimeout(() => closeEnrollmentModal(), 4000);
+                    }
                 } else {
                     throw new Error('Network response was not ok.');
                 }
