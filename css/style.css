@@ -127,11 +127,25 @@
             display: block;
         }
 
+        .mouse-glow {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle at center, rgba(240, 192, 90, 0.08) 0%, transparent 60%);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.5s ease;
+            display: block;
+        }
+
         /* Hide custom cursor on touch devices (mobile/tablet) */
         @media (hover: none) and (pointer: coarse) {
 
             .cursor,
-            .cursor-dot {
+            .cursor-dot,
+            .mouse-glow {
                 display: none !important;
             }
         }
@@ -3753,7 +3767,8 @@
         @media (hover: none) and (pointer: coarse) {
 
             .cursor,
-            .cursor-dot {
+            .cursor-dot,
+            .mouse-glow {
                 display: none !important;
                 opacity: 0 !important;
             }

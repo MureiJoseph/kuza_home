@@ -21,10 +21,13 @@
         // ═══════════════════════════════════════
         const cursor = document.querySelector('.cursor');
         const cursorDot = document.querySelector('.cursor-dot');
+        const mouseGlow = document.querySelector('.mouse-glow');
 
         if (cursor && cursorDot) {
             let mouseX = 0;
             let mouseY = 0;
+            let glowX = 0;
+            let glowY = 0;
 
             document.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
@@ -39,16 +42,29 @@
                 cursorDot.style.top = mouseY + 'px';
             });
 
+            if (mouseGlow) {
+                const animateGlow = () => {
+                    glowX += (mouseX - glowX) * 0.15;
+                    glowY += (mouseY - glowY) * 0.15;
+                    mouseGlow.style.left = glowX + 'px';
+                    mouseGlow.style.top = glowY + 'px';
+                    requestAnimationFrame(animateGlow);
+                };
+                animateGlow();
+            }
+
             // Hide cursor on mouse leave
             document.addEventListener('mouseleave', () => {
                 cursor.style.opacity = '0';
                 cursorDot.style.opacity = '0';
+                if (mouseGlow) mouseGlow.style.opacity = '0';
             });
 
             // Show cursor on mouse enter
             document.addEventListener('mouseenter', () => {
                 cursor.style.opacity = '1';
                 cursorDot.style.opacity = '1';
+                if (mouseGlow) mouseGlow.style.opacity = '1';
             });
         }
 
