@@ -49,11 +49,6 @@ if (cursor && cursorDot) {
             mouseGlow.style.left = glowX + 'px';
             mouseGlow.style.top = glowY + 'px';
 
-            // Always ensure glow is visible while moving
-            if (mouseGlow.style.opacity !== '1') {
-                mouseGlow.style.opacity = '1';
-            }
-
             requestAnimationFrame(animateGlow);
         };
         animateGlow();
@@ -71,6 +66,20 @@ if (cursor && cursorDot) {
         cursor.style.opacity = '1';
         cursorDot.style.opacity = '1';
         if (mouseGlow) mouseGlow.style.opacity = '1';
+    });
+
+    // Add hover effect for interactive elements
+    const interactiveElements = document.querySelectorAll('a, button, input, textarea, select, .nav-cta, .nav-programs-btn, .hero-scroll, [onclick]');
+    
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.classList.add('hover');
+            cursorDot.style.transform = 'translate(-50%, -50%) scale(0.5)';
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.classList.remove('hover');
+            cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+        });
     });
 }
 
@@ -96,9 +105,11 @@ document.addEventListener('mousemove', (e) => {
 // NAVIGATION SCROLL
 // ═══════════════════════════════════════
 const nav = document.querySelector('.nav');
-window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 100);
-});
+if (nav) {
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 100);
+    });
+}
 
 // ═══════════════════════════════════════
 // SCROLL REVEAL
@@ -147,7 +158,7 @@ if (mobileToggle && navLinks) {
 
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
+        if (nav && !nav.contains(e.target) && navLinks.classList.contains('active')) {
             navLinks.classList.remove('active');
             mobileToggle.classList.remove('active');
             mobileToggle.setAttribute('aria-expanded', 'false');
@@ -160,6 +171,8 @@ if (mobileToggle && navLinks) {
         if (e.key === 'Escape' && navLinks.classList.contains('active')) {
             navLinks.classList.remove('active');
             mobileToggle.classList.remove('active');
+            mobileToggle.setAttribute('aria-expanded', 'false');
+            mobileToggle.setAttribute('aria-label', 'Open navigation menu');
         }
     });
 }
@@ -182,6 +195,10 @@ cards.forEach(card => {
 
         card.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
     });
+
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = `translateY(0) rotateX(0deg) rotateY(0deg)`;
+    });
 });
 
 /* ═══════════════════════════════════════
@@ -192,12 +209,7 @@ const enrollmentForm = document.getElementById('enrollmentForm');
 const modalActionButtons = document.getElementById('modalActionButtons');
 const modalSuccessMessage = document.getElementById('modalSuccessMessage');
 
-// Set the hidden redirect URL to the checkout page
-const formRedirectUrl = document.getElementById('formRedirectUrl');
-if (formRedirectUrl) {
-    // Placeholder checkout URL - Replace with actual Stripe/payment link
-    formRedirectUrl.value = 'https://kuzapartners.com/tmb-checkout-placeholder';
-}
+// The redirect URL is managed directly in index.html, no need to override it here.
 
 window.openEnrollmentModal = () => {
     if (enrollmentModal) {
@@ -205,7 +217,14 @@ window.openEnrollmentModal = () => {
         document.body.style.overflow = 'hidden'; // Prevent scrolling
 
         // Reset form state if reopened
-        if (enrollmentForm) enrollmentForm.reset();
+        if (enrollmentForm) {
+            enrollmentForm.reset();
+            const submitBtn = enrollmentForm.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.innerText = 'Confirm & Receive Document';
+                submitBtn.disabled = false;
+            }
+        }
         if (modalActionButtons) modalActionButtons.style.display = 'flex';
         if (modalSuccessMessage) modalSuccessMessage.style.display = 'none';
     }
