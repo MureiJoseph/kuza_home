@@ -11,7 +11,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.4
@@ -21,3 +21,13 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
           server-dir: /home/chlojjrp/public_html/
+          protocol: ftps
+```
+
+Then scroll down → **Commit changes** → **Commit directly to main** → **Commit changes**
+
+---
+
+Also make sure you updated `FTP_USERNAME` secret to:
+```
+chlojjrp@kuzapartners.com
