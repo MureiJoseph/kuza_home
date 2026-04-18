@@ -156,6 +156,15 @@
             .mouse-glow {
                 display: none !important;
             }
+
+            body,
+            a,
+            button,
+            input,
+            textarea,
+            select {
+                cursor: auto !important;
+            }
         }
 
         /* ═══════════════════════════════════════
