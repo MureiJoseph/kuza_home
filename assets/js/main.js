@@ -6,6 +6,11 @@ function showTMBPage() {
     if (tmbPage) tmbPage.classList.add('active');
     if (tmbBackBtn) tmbBackBtn.classList.add('visible');
     window.scrollTo(0, 0);
+    // Keep the URL in sync so the Programs page is shareable and
+    // the browser back button returns to the home view
+    if (window.location.hash !== '#programs') {
+        window.location.hash = 'programs';
+    }
 }
 
 function hideTMBPage() {
@@ -15,6 +20,22 @@ function hideTMBPage() {
     if (mainContent) mainContent.classList.remove('hidden');
     if (tmbPage) tmbPage.classList.remove('active');
     if (tmbBackBtn) tmbBackBtn.classList.remove('visible');
+    if (window.location.hash === '#programs') {
+        history.pushState('', document.title, window.location.pathname + window.location.search);
+    }
+}
+
+// Sync TMB page with the URL hash (deep links, back/forward buttons)
+window.addEventListener('hashchange', () => {
+    if (window.location.hash === '#programs') {
+        showTMBPage();
+    } else {
+        hideTMBPage();
+    }
+});
+
+if (window.location.hash === '#programs') {
+    showTMBPage();
 }
 // ═══════════════════════════════════════
 // CUSTOM CURSOR
@@ -211,8 +232,11 @@ const modalSuccessMessage = document.getElementById('modalSuccessMessage');
 
 // The redirect URL is managed directly in index.html, no need to override it here.
 
+let lastFocusedBeforeModal = null;
+
 window.openEnrollmentModal = () => {
     if (enrollmentModal) {
+        lastFocusedBeforeModal = document.activeElement;
         enrollmentModal.classList.add('active');
         document.body.style.overflow = 'hidden'; // Prevent scrolling
 
@@ -227,6 +251,9 @@ window.openEnrollmentModal = () => {
         }
         if (modalActionButtons) modalActionButtons.style.display = 'flex';
         if (modalSuccessMessage) modalSuccessMessage.style.display = 'none';
+
+        const emailInput = document.getElementById('leadEmail');
+        if (emailInput) emailInput.focus();
     }
 };
 
@@ -234,8 +261,38 @@ window.closeEnrollmentModal = () => {
     if (enrollmentModal) {
         enrollmentModal.classList.remove('active');
         document.body.style.overflow = ''; // Restore scrolling
+        if (lastFocusedBeforeModal) {
+            lastFocusedBeforeModal.focus();
+            lastFocusedBeforeModal = null;
+        }
     }
 };
+
+// Close modal on Escape, keep Tab focus inside while it is open
+document.addEventListener('keydown', (e) => {
+    if (!enrollmentModal || !enrollmentModal.classList.contains('active')) return;
+
+    if (e.key === 'Escape') {
+        closeEnrollmentModal();
+        return;
+    }
+
+    if (e.key === 'Tab') {
+        const focusables = enrollmentModal.querySelectorAll(
+            'button:not([disabled]), input:not([type="hidden"]):not([name="_honey"]), a[href]'
+        );
+        if (!focusables.length) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+            e.preventDefault();
+            last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+            e.preventDefault();
+            first.focus();
+        }
+    }
+});
 
 // Handle FormSubmit via AJAX to prevent page reload
 if (enrollmentForm) {

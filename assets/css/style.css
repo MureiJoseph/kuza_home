@@ -2820,7 +2820,7 @@
         }
 
         .footer-copyright {
-            color: var(--ash);
+            color: var(--mist);
             font-size: 0.95rem;
         }
 
@@ -4148,5 +4148,64 @@
 
             .timeline-content {
                 padding: 1.25rem;
+            }
+        }
+
+        /* ═══════════════════════════════════════
+           NAV: EXTRA MENU ITEMS
+        ═══════════════════════════════════════ */
+
+        /* "Get Started" lives in the overlay menu on mobile only —
+           on desktop it is already a standalone CTA button */
+        .nav-mobile-only {
+            display: none;
+        }
+
+        button.btn-primary {
+            cursor: pointer;
+        }
+
+        @media (max-width: 992px) {
+            .nav-mobile-only {
+                display: block;
+            }
+
+            .nav-links.active li:nth-child(6) {
+                transition-delay: 0.7s;
+            }
+        }
+
+        /* ═══════════════════════════════════════
+           HERO: SMALL-SCREEN OVERLAP FIX
+        ═══════════════════════════════════════ */
+
+        /* The absolute-positioned scroll indicator collides with the
+           stacked CTA buttons on small phones — hide it there */
+        @media (max-width: 520px), (max-height: 640px) {
+            .hero-scroll {
+                display: none;
+            }
+        }
+
+        /* ═══════════════════════════════════════
+           ACCESSIBILITY: REDUCED MOTION
+        ═══════════════════════════════════════ */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+
+            .floating-word,
+            .hero-shapes,
+            .hero-rings,
+            .mouse-glow {
+                display: none !important;
             }
         }
